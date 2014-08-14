@@ -1,0 +1,31 @@
+########## Intellij #########
+
+*.iml
+.idea/
+out/
+gen-external-apklibs/
+
+########## Eclipse ##########
+
+.classpath
+.settings/
+.project
+classes/
+libs/
+bin/
+project.properties
+
+########### Maven ###########
+
+target/
+tmp/
+
+########### Android ###########
+
+.gradle/
+build/
+
+########### Android ###########
+
+gen/
+lint.xml
