@@ -33,6 +33,7 @@
 
     <modules>
         <module>aerogear-android-authz</module>
+        <module>aerogear-android-authz-test</module>
     </modules>
 
     <scm>
@@ -51,10 +52,6 @@
         <aerogear.android.store.version>2.0.0-SNAPSHOT</aerogear.android.store.version>
         <aerogear.android.pipe.version>2.0.0-SNAPSHOT</aerogear.android.pipe.version>
         <aerogear.crypto.version>0.1.3</aerogear.crypto.version>
-
-        <!-- Test dependencies -->
-        <junit.version>4.8.2</junit.version>
-        <roboeletric.version>2.2</roboeletric.version>
 
         <!-- Plugins versions -->
         <java.version>1.7</java.version>
@@ -152,21 +149,6 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-        </dependency>
-
-        <!-- Test dependencies -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.robolectric</groupId>
-            <artifactId>robolectric</artifactId>
-            <version>${roboeletric.version}</version>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>
