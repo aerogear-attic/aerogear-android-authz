@@ -4,7 +4,7 @@ AeroGear's Android libraries were built as jar, apklib and aar using [Maven](htt
 
 ## Authz
 
-AeroGear Android Authz will give developers the ability to integrate their Android application with RESTful services.
+AeroGear Android Authz will give developers the ability to integrate their Android application with RESTful services secured with OAuth 2.
 
 ## Building
 
