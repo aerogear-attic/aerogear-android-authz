@@ -54,13 +54,13 @@ before_install:
 
   # AeroGear Android Store
   - git clone git://github.com/aerogear/aerogear-android-store.git
-  - cd $PWD/aerogear-android-store
+  - cd $PWD/aerogear-android-store/aerogear-android-store
   - mvn install -N --quiet
   - cd -
 
   # AeroGear Android Pipe
   - git clone git://github.com/aerogear/aerogear-android-pipe.git
-  - cd $PWD/aerogear-android-security
+  - cd $PWD/aerogear-android-pipe/aerogear-android-pipe
   - mvn install -N --quiet
   - cd -
 
