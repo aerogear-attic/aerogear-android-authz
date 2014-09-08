@@ -71,7 +71,7 @@ public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<Mai
         account.setAccessToken("testToken");
         account.setAccountId("testAccountId");
         account.setAuthorizationCode(null);
-        account.setCliendId("testClientId");
+        account.setClientId("testClientId");
         account.setRefreshToken("testRefreshToken");
 
         baseUrl = new URL("http://example.com");

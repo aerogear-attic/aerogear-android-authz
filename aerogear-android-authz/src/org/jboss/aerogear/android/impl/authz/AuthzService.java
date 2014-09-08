@@ -195,7 +195,7 @@ public class AuthzService extends Service {
         final Map<String, String> data = new HashMap<String, String>();
 
         data.put("code", storedAccount.getAuthorizationCode());
-        data.put("client_id", storedAccount.getCliendId());
+        data.put("client_id", storedAccount.getClientId());
         if (config.getRedirectURL() != null) {
             data.put("redirect_uri", config.getRedirectURL());
         }
@@ -223,7 +223,7 @@ public class AuthzService extends Service {
 
         data.put("refresh_token", storedAccount.getRefreshToken());
         data.put("grant_type", "refresh_token");
-        data.put("client_id", storedAccount.getCliendId());
+        data.put("client_id", storedAccount.getClientId());
         if (config.getClientSecret() != null) {
             data.put("client_secret", config.getClientSecret());
         }

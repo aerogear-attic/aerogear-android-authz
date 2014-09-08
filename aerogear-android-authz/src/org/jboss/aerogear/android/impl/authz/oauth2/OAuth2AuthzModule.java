@@ -258,7 +258,7 @@ public class OAuth2AuthzModule implements AuthzModule {
             OAuth2AuthzSession session = new OAuth2AuthzSession();
             session.setAuthorizationCode(code);
             session.setAccountId(accountId);
-            session.setCliendId(clientId);
+            session.setClientId(clientId);
             service.addAccount(session);
 
             OAuth2FetchAccess fetcher = new OAuth2FetchAccess(service);

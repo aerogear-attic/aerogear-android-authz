@@ -32,14 +32,14 @@ public class OAuth2AuthzSession implements Parcelable {
     @RecordId
     private String accountId = "";
 
-    private String cliendId = "";
+    private String clientId = "";
     private String accessToken = "";
     private String authorizationCode = "";
     private String refreshToken = "";
     private long expires_on = 0;
 
     private OAuth2AuthzSession(Parcel in) {
-        cliendId = in.readString();
+        clientId = in.readString();
         accessToken = in.readString();
         authorizationCode = in.readString();
         refreshToken = in.readString();
@@ -50,12 +50,12 @@ public class OAuth2AuthzSession implements Parcelable {
     public OAuth2AuthzSession() {
     }
 
-    public String getCliendId() {
-        return cliendId;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setCliendId(String cliendId) {
-        this.cliendId = cliendId;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
     public String getAccessToken() {
@@ -113,7 +113,7 @@ public class OAuth2AuthzSession implements Parcelable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.cliendId);
+        hash = 71 * hash + Objects.hashCode(this.clientId);
         hash = 71 * hash + Objects.hashCode(this.accessToken);
         hash = 71 * hash + Objects.hashCode(this.authorizationCode);
         hash = 71 * hash + Objects.hashCode(this.refreshToken);
@@ -131,7 +131,7 @@ public class OAuth2AuthzSession implements Parcelable {
             return false;
         }
         final OAuth2AuthzSession other = (OAuth2AuthzSession) obj;
-        if (!Objects.equals(this.cliendId, other.cliendId)) {
+        if (!Objects.equals(this.clientId, other.clientId)) {
             return false;
         }
         if (!Objects.equals(this.accessToken, other.accessToken)) {
@@ -154,7 +154,7 @@ public class OAuth2AuthzSession implements Parcelable {
 
     @Override
     public String toString() {
-        return "AuthzSession{" + "cliendId=" + cliendId + ", accessToken=" + accessToken + ", authorizationCode=" + authorizationCode + ", refreshToken=" + refreshToken
+        return "AuthzSession{" + "cliendId=" + clientId + ", accessToken=" + accessToken + ", authorizationCode=" + authorizationCode + ", refreshToken=" + refreshToken
                 + ", accountId=" + accountId + ", expires_on=" + expires_on + '}';
     }
 
@@ -165,7 +165,7 @@ public class OAuth2AuthzSession implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(cliendId);
+        dest.writeString(clientId);
         dest.writeString(accessToken);
         dest.writeString(authorizationCode);
         dest.writeString(refreshToken);
