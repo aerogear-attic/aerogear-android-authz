@@ -13,6 +13,12 @@ env:
 
 before_install:
 
+
+  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
   #################################################
   ########## maven-android-sdk-deployer ###########
   #################################################
@@ -43,31 +49,19 @@ before_install:
   # AeroGear Android Security
   - git clone git://github.com/aerogear/aerogear-android-security.git
   - cd $PWD/aerogear-android-security
-  - mvn install --quiet
-  - cd -
-
-  # AeroGear Android Security
-  - git clone git://github.com/aerogear/aerogear-android-security.git
-  - cd $PWD/aerogear-android-security
   - mvn install -N --quiet
   - cd -
 
   # AeroGear Android Store
   - git clone git://github.com/aerogear/aerogear-android-store.git
-  - cd $PWD/aerogear-android-store/aerogear-android-store
-  - mvn install --quiet
+  - cd $PWD/aerogear-android-store/
+  - mvn -fn install --quiet
   - cd -
 
   # AeroGear Android Pipe
   - git clone git://github.com/aerogear/aerogear-android-pipe.git
-  - cd $PWD/aerogear-android-pipe/aerogear-android-pipe
-  - mvn install --quiet
+  - cd $PWD/aerogear-android-pipe/
+  - mvn -fn install --quiet
   - cd -
 
-before_script:
-
-  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
 
