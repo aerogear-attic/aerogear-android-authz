@@ -1,5 +1,8 @@
 language: android
 
+notifications:
+  irc: "irc.freenode.org#aerogear"
+
 android:
   components:
     - build-tools-19.1.0
