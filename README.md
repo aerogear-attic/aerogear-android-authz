@@ -1,3 +1,4 @@
+# Build Travis
 # AeroGear Android Authz [![Build Status](https://travis-ci.org/aerogear/aerogear-android-authz.png)](https://travis-ci.org/aerogear/aerogear-android-authz)
 
 AeroGear's Android libraries were built as jar, apklib and aar using [Maven](http://maven.apache.org/) and the [android-maven-plugin](https://github.com/jayway/maven-android-plugin). The project follows the standard Android project layout as opposed to the standard Maven layout so sources will be in /src instead of /src/main/java and can be imported directly into IDE as an Android project.
@@ -12,9 +13,9 @@ Until the 2.0 modules are stable and in Maven Central, we need to build the proj
 
 *The following dependencies are required to build this project:*
 
-* [aerogear-android-core](http://github.com/aerogear/aerogear-android-core) 
-* [aerogear-android-store](http://github.com/aerogear/aerogear-android-store) 
-* [aerogear-android-pipe](http://github.com/aerogear/aerogear-android-pipe) 
+* [aerogear-android-core](http://github.com/aerogear/aerogear-android-core)
+* [aerogear-android-store](http://github.com/aerogear/aerogear-android-store)
+* [aerogear-android-pipe](http://github.com/aerogear/aerogear-android-pipe)
 
 ## Usage
 
