@@ -106,12 +106,6 @@
                         <path>${env.ANDROID_HOME}</path>
                         <platform>${android.platform}</platform>
                     </sdk>
-                    <dex>
-                        <jvmArguments>
-                            <jvmArgument>-Xms256m</jvmArgument>
-                            <jvmArgument>-Xmx4096m</jvmArgument>
-                        </jvmArguments>
-                    </dex>
                 </configuration>
                 <extensions>true</extensions>
             </plugin>
