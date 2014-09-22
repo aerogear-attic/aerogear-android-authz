@@ -34,12 +34,10 @@ import org.apache.http.HttpStatus;
 
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.authentication.AuthorizationFields;
-import org.jboss.aerogear.android.impl.authz.AuthzConfig;
 import org.jboss.aerogear.android.authorization.AuthzModule;
 import org.jboss.aerogear.android.code.ModuleFields;
 import org.jboss.aerogear.android.http.HttpException;
 import org.jboss.aerogear.android.impl.authz.AuthzService;
-import org.jboss.aerogear.android.impl.authz.OAuth2AuthorizationException;
 
 /**
  *

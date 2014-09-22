@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.authz;
+package org.jboss.aerogear.android.impl.authz.oauth2;
 
 import org.jboss.aerogear.android.ConfigurationProvider;
 

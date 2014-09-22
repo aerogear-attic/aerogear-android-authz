@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.authz;
+package org.jboss.aerogear.android.impl.authz.oauth2;
 
 import android.util.Pair;
 import java.util.ArrayList;
@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Set;
 import org.jboss.aerogear.android.Config;
 import org.jboss.aerogear.android.authorization.AuthzModule;
+import org.jboss.aerogear.android.impl.authz.AuthorizationConfiguration;
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzModule;
 
 public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration<OAuth2AuthorizationConfiguration> implements Config<OAuth2AuthorizationConfiguration>{

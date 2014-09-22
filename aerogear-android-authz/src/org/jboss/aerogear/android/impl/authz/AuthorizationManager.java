@@ -15,6 +15,8 @@
  */
 package org.jboss.aerogear.android.impl.authz;
 
+import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthroizationConfigurationProvider;
+import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthorizationConfiguration;
 import java.util.HashMap;
 import java.util.Map;
 import org.jboss.aerogear.android.ConfigurationProvider;
