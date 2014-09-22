@@ -17,7 +17,7 @@
 package org.jboss.aerogear.android.impl.authz;
 
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthorizationException;
-import org.jboss.aerogear.android.impl.authz.oauth2.AuthzConfig;
+import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2Properties;
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzSession;
 
 import android.app.Service;
@@ -89,7 +89,7 @@ public class AuthzService extends Service {
      * @throws OAuth2AuthorizationException if something went wrong in the
      *                                      exchange
      */
-    public String fetchAccessToken(String accountId, AuthzConfig config) throws OAuth2AuthorizationException {
+    public String fetchAccessToken(String accountId, OAuth2Properties config) throws OAuth2AuthorizationException {
         OAuth2AuthzSession storedAccount = sessionStore.read(accountId);
         if (storedAccount == null) {
             return null;
@@ -193,7 +193,7 @@ public class AuthzService extends Service {
 
     }
 
-    private void exchangeAuthorizationCodeForAccessToken(OAuth2AuthzSession storedAccount, AuthzConfig config) throws OAuth2AuthorizationException {
+    private void exchangeAuthorizationCodeForAccessToken(OAuth2AuthzSession storedAccount, OAuth2Properties config) throws OAuth2AuthorizationException {
         final Map<String, String> data = new HashMap<String, String>();
 
         data.put("code", storedAccount.getAuthorizationCode());
@@ -220,7 +220,7 @@ public class AuthzService extends Service {
 
     }
 
-    private void refreshAccount(OAuth2AuthzSession storedAccount, AuthzConfig config) throws OAuth2AuthorizationException {
+    private void refreshAccount(OAuth2AuthzSession storedAccount, OAuth2Properties config) throws OAuth2AuthorizationException {
         final Map<String, String> data = new HashMap<String, String>();
 
         data.put("refresh_token", storedAccount.getRefreshToken());
@@ -243,7 +243,7 @@ public class AuthzService extends Service {
         runAccountAction(storedAccount, config, data);
     }
 
-    private void runAccountAction(OAuth2AuthzSession storedAccount, AuthzConfig config, final Map<String, String> data) throws OAuth2AuthorizationException {
+    private void runAccountAction(OAuth2AuthzSession storedAccount, OAuth2Properties config, final Map<String, String> data) throws OAuth2AuthorizationException {
         try {
             final URL accessTokenEndpoint = appendToBaseURL(config.getBaseURL(), config.getAccessTokenEndpoint());
 

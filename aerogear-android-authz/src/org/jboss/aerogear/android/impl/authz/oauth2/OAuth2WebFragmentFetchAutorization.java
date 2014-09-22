@@ -44,7 +44,7 @@ public class OAuth2WebFragmentFetchAutorization {
         this.state = state;
     }
 
-    public void performAuthorization(AuthzConfig config, final Callback<String> callback) {
+    public void performAuthorization(OAuth2Properties config, final Callback<String> callback) {
 
         try {
             doAuthorization(config, callback);
@@ -69,7 +69,7 @@ public class OAuth2WebFragmentFetchAutorization {
         return scopeValue.toString();
     }
 
-    private void doAuthorization(AuthzConfig config, final Callback<String> callback) throws UnsupportedEncodingException, MalformedURLException {
+    private void doAuthorization(OAuth2Properties config, final Callback<String> callback) throws UnsupportedEncodingException, MalformedURLException {
 
         URL baseURL = config.getBaseURL();
         URL authzEndpoint = appendToBaseURL(baseURL, config.getAuthzEndpoint());

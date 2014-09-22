@@ -41,7 +41,7 @@ public class OAuth2FetchAccess {
         this.service = service;
     }
 
-    public void fetchAccessCode(final String accountId, final AuthzConfig config, final Callback<String> callback) {
+    public void fetchAccessCode(final String accountId, final OAuth2Properties config, final Callback<String> callback) {
 
         if (Looper.myLooper() == Looper.getMainLooper()) {//foreground thread
             new AsyncTask<Object, Void, Object>() {
@@ -49,7 +49,7 @@ public class OAuth2FetchAccess {
                 @Override
                 protected Object doInBackground(Object... params) {
                     try {
-                        return service.fetchAccessToken((String) params[0], (AuthzConfig) params[1]);
+                        return service.fetchAccessToken((String) params[0], (OAuth2Properties) params[1]);
                     } catch (OAuth2AuthorizationException ex) {
                         return ex;
                     }

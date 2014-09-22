@@ -52,7 +52,7 @@ public class OAuth2AuthzModule implements AuthzModule {
 
     private final String accountId;
     private final String clientId;
-    private final AuthzConfig config;
+    private final OAuth2Properties config;
     private OAuth2AuthzSession account;
     private AuthzService service;
 
@@ -62,7 +62,7 @@ public class OAuth2AuthzModule implements AuthzModule {
     }
     private String TAG = OAuth2AuthzModule.class.getSimpleName();
 
-    public OAuth2AuthzModule(AuthzConfig config) {
+    public OAuth2AuthzModule(OAuth2Properties config) {
         this.clientId = config.getClientId();
         this.accountId = config.getAccountId();
         this.config = config;

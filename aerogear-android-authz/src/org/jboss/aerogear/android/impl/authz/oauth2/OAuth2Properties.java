@@ -30,7 +30,7 @@ import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzSession;
 /**
  * Authorization configuration class.
  */
-public class AuthzConfig {
+public class OAuth2Properties {
 
     private final URL baseURL;
     private final String name;
@@ -51,7 +51,7 @@ public class AuthzConfig {
      * @param name A name to reference the AuthorizationModule which this config
      * will create.
      */
-    public AuthzConfig(URL baseURL, String name) {
+    public OAuth2Properties(URL baseURL, String name) {
         this.baseURL = baseURL;
         this.name = name;
     }
