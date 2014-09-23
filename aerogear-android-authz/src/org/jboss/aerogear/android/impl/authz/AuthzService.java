@@ -17,7 +17,6 @@
 package org.jboss.aerogear.android.impl.authz;
 
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthorizationException;
-import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2Properties;
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzSession;
 
 import android.app.Service;

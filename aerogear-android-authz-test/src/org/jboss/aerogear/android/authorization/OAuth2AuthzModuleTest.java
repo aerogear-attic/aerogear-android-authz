@@ -24,9 +24,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.jboss.aerogear.android.Callback;
-import org.jboss.aerogear.android.impl.authz.AuthzConfig;
+import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2Properties;
 import org.jboss.aerogear.android.impl.authz.AuthzService;
-import org.jboss.aerogear.android.impl.authz.OAuth2AuthorizationException;
+import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthorizationException;
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzModule;
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzSession;
 import org.jboss.aerogear.android.impl.helper.UnitTestUtils;
@@ -58,7 +58,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
     }
 
     public void testCreation() throws MalformedURLException {
-        AuthzConfig config = new AuthzConfig(BASE_URL, "name");
+        OAuth2Properties config = new OAuth2Properties(BASE_URL, "name");
         OAuth2AuthzModule module = new OAuth2AuthzModule(config);
 
         assertFalse(module.isAuthorized());
@@ -66,7 +66,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
     }
 
     public void testRequestAccess() {
-        AuthzConfig config = new AuthzConfig(BASE_URL, "name");
+        OAuth2Properties config = new OAuth2Properties(BASE_URL, "name");
         OAuth2AuthzModule module = new OAuth2AuthzModule(config);
         String state = "testState";
         Activity mockActivity = mock(Activity.class);
@@ -81,7 +81,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
 
     public void testGetAccessTokens() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 
-        AuthzConfig config = new AuthzConfig(BASE_URL, "name");
+        OAuth2Properties config = new OAuth2Properties(BASE_URL, "name");
         OAuth2AuthzModule module = new OAuth2AuthzModule(config);
 
         OAuth2AuthzSession account = new OAuth2AuthzSession();
@@ -102,7 +102,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
 
         ArgumentCaptor<OAuth2AuthzSession> sessionCaptor = ArgumentCaptor.forClass(OAuth2AuthzSession.class);
 
-        AuthzConfig config = new AuthzConfig(BASE_URL, "name");
+        OAuth2Properties config = new OAuth2Properties(BASE_URL, "name");
         config.setAccountId("testAccountId");
 
         OAuth2AuthzModule module = new OAuth2AuthzModule(config);
@@ -131,7 +131,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
 
         when(mockService.getAccount(matches("testAccountId"))).thenReturn(account);
 
-        AuthzConfig config = new AuthzConfig(BASE_URL, "name");
+        OAuth2Properties config = new OAuth2Properties(BASE_URL, "name");
         config.setAccountId("testAccountId");
 
         OAuth2AuthzModule module = new OAuth2AuthzModule(config);

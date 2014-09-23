@@ -20,9 +20,9 @@ import com.google.gson.JsonObject;
 import org.jboss.aerogear.android.datamanager.Store;
 import org.jboss.aerogear.android.http.HeaderAndBody;
 import org.jboss.aerogear.android.http.HttpProvider;
-import org.jboss.aerogear.android.impl.authz.AuthzConfig;
+import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2Properties;
 import org.jboss.aerogear.android.impl.authz.AuthzService;
-import org.jboss.aerogear.android.impl.authz.OAuth2AuthorizationException;
+import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthorizationException;
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzSession;
 import org.jboss.aerogear.android.impl.datamanager.MemoryStore;
 import org.jboss.aerogear.android.impl.helper.UnitTestUtils;
@@ -79,14 +79,14 @@ public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<Mai
     }
 
     public void testFetchTokenReturnsNullForNoAccount() throws OAuth2AuthorizationException {
-        assertEquals(null, service.fetchAccessToken("testAccount", new AuthzConfig(null, null)));
+        assertEquals(null, service.fetchAccessToken("testAccount", new OAuth2Properties(null, null)));
     }
 
     public void testFetchTokenForFreshAccount() throws OAuth2AuthorizationException {
         account.setExpires_on(hourFromNow());
         when(mockStore.read(eq("testAccountId"))).thenReturn(account);
 
-        assertEquals("testToken", service.fetchAccessToken("testAccountId", new AuthzConfig(null, null)));
+        assertEquals("testToken", service.fetchAccessToken("testAccountId", new OAuth2Properties(null, null)));
     }
 
     public void testExchangeToken() {
@@ -111,7 +111,7 @@ public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<Mai
             }
         });
 
-        assertEquals("testRefreshedAccessToken", service.fetchAccessToken("testAccountId", new AuthzConfig(baseUrl, null)));
+        assertEquals("testRefreshedAccessToken", service.fetchAccessToken("testAccountId", new OAuth2Properties(baseUrl, null)));
     }
 
     private long hourFromNow() {
