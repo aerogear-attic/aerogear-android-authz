@@ -1,18 +1,18 @@
 /**
- * JBoss, Home of Professional Open Source
- * Copyright Red Hat, Inc., and individual contributors.
+ * JBoss, Home of Professional Open Source Copyright Red Hat, Inc., and
+ * individual contributors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 package org.jboss.aerogear.android.authorization;
 
@@ -25,7 +25,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.impl.authz.AuthorizationManager;
-import static org.jboss.aerogear.android.impl.authz.AuthorizationManager.config;
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthorizationConfiguration;
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzService;
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthorizationException;
@@ -59,9 +58,21 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         super(MainActivity.class);
     }
 
+    public void testRequiresBaseURL() {
+        try {
+            OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
+            OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
+        } catch (IllegalStateException ex) {
+            return;
+        }
+        fail("Expecting illegal state exception.");
+
+    }
+
     public void testCreation() throws MalformedURLException {
         OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
-        
+        config.setBaseURL(BASE_URL);
+                
         OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
 
         assertFalse(module.isAuthorized());
@@ -70,7 +81,8 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
 
     public void testRequestAccess() {
         OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
-        OAuth2AuthzModule module  = (OAuth2AuthzModule) config.asModule();
+        config.setBaseURL(BASE_URL);
+        OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
         String state = "testState";
         Activity mockActivity = mock(Activity.class);
         Callback mockCallback = mock(Callback.class);
@@ -85,7 +97,8 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
     public void testGetAccessTokens() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 
         OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
-        OAuth2AuthzModule module  = (OAuth2AuthzModule) config.asModule();
+        config.setBaseURL(BASE_URL);
+        OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
 
         OAuth2AuthzSession account = new OAuth2AuthzSession();
         account.setAccessToken("testToken");
@@ -107,7 +120,8 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
 
         OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
         config.setAccountId("testAccountId");
-
+        config.setBaseURL(BASE_URL);
+        
         OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
         Class<?> callbackClass = Class.forName("org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzModule$OAuth2AuthorizationCallback");
         Constructor<?> constructor = callbackClass.getDeclaredConstructor(OAuth2AuthzModule.class, Activity.class, Callback.class, ServiceConnection.class);
@@ -136,6 +150,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
 
         OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
         config.setAccountId("testAccountId");
+        config.setBaseURL(BASE_URL);
 
         OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
         Class<?> callbackClass = Class.forName("org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzModule$OAuth2AccessCallback");

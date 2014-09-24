@@ -25,7 +25,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.jboss.aerogear.android.impl.authz.AuthzTypes;
-import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzSession;
 
 /**
  * Authorization configuration class.
