@@ -14,17 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.authorization;
+package org.jboss.aerogear.android.impl.authz.oauth2;
 
 import com.google.gson.JsonObject;
-import org.jboss.aerogear.android.datamanager.Store;
-import org.jboss.aerogear.android.http.HeaderAndBody;
-import org.jboss.aerogear.android.http.HttpProvider;
-import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2Properties;
-import org.jboss.aerogear.android.impl.authz.AuthzService;
-import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthorizationException;
-import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzSession;
-import org.jboss.aerogear.android.impl.datamanager.MemoryStore;
+
 import org.jboss.aerogear.android.impl.helper.UnitTestUtils;
 import org.jboss.aerogear.android.impl.util.PatchedActivityInstrumentationTestCase;
 import org.mockito.invocation.InvocationOnMock;
@@ -35,6 +28,11 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import static java.util.Calendar.HOUR;
+import org.jboss.aerogear.android.authorization.MainActivity;
+import org.jboss.aerogear.android.datamanager.Store;
+import org.jboss.aerogear.android.http.HeaderAndBody;
+import org.jboss.aerogear.android.http.HttpProvider;
+import org.jboss.aerogear.android.impl.datamanager.MemoryStore;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -42,7 +40,7 @@ import static org.mockito.Mockito.when;
 
 public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<MainActivity> {
 
-    private AuthzService service;
+    private OAuth2AuthzService service;
     private Store mockStore;
     private OAuth2AuthzSession account;
     private URL baseUrl;
@@ -57,7 +55,7 @@ public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<Mai
         super.setUp();
         mockStore = mock(MemoryStore.class);
         mockProvider = mock(HttpProvider.class);
-        service = new AuthzService() {
+        service = new OAuth2AuthzService() {
 
             @Override
             protected HttpProvider getHttpProvider(URL url) {
