@@ -25,7 +25,6 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import org.jboss.aerogear.android.Callback;
-import org.jboss.aerogear.android.impl.authz.AuthzService;
 
 /**
  * This is a helper class which fetches an access token given an authorization
@@ -35,9 +34,9 @@ import org.jboss.aerogear.android.impl.authz.AuthzService;
  */
 public class OAuth2FetchAccess {
 
-    private final AuthzService service;
+    private final OAuth2AuthzService service;
 
-    public OAuth2FetchAccess(AuthzService service) {
+    public OAuth2FetchAccess(OAuth2AuthzService service) {
         this.service = service;
     }
 

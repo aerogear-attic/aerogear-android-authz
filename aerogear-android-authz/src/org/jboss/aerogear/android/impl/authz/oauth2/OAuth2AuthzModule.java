@@ -37,7 +37,6 @@ import org.jboss.aerogear.android.authentication.AuthorizationFields;
 import org.jboss.aerogear.android.authorization.AuthzModule;
 import org.jboss.aerogear.android.code.ModuleFields;
 import org.jboss.aerogear.android.http.HttpException;
-import org.jboss.aerogear.android.impl.authz.AuthzService;
 
 /**
  *
@@ -54,7 +53,7 @@ public class OAuth2AuthzModule implements AuthzModule {
     private final String clientId;
     private final OAuth2Properties config;
     private OAuth2AuthzSession account;
-    private AuthzService service;
+    private OAuth2AuthzService service;
 
     static {
         AUTHZ_FILTER = new IntentFilter();
@@ -93,7 +92,7 @@ public class OAuth2AuthzModule implements AuthzModule {
 
         final String state = UUID.randomUUID().toString();
 
-        final AuthzService.AGAuthzServiceConnection connection = new AuthzService.AGAuthzServiceConnection() {
+        final OAuth2AuthzService.AGAuthzServiceConnection connection = new OAuth2AuthzService.AGAuthzServiceConnection() {
 
             @Override
             public void onServiceConnected(ComponentName className, IBinder iBinder) {
@@ -103,8 +102,7 @@ public class OAuth2AuthzModule implements AuthzModule {
 
         };
 
-        activity.bindService(
-                new Intent(activity.getApplicationContext(), AuthzService.class
+        activity.bindService(new Intent(activity.getApplicationContext(), OAuth2AuthzService.class
                 ), connection, Context.BIND_AUTO_CREATE
         );
 
@@ -119,7 +117,7 @@ public class OAuth2AuthzModule implements AuthzModule {
         return fields;
     }
 
-    private void doRequestAccess(final String state, final Activity activity, final Callback<String> callback, final AuthzService.AGAuthzServiceConnection instance) {
+    private void doRequestAccess(final String state, final Activity activity, final Callback<String> callback, final OAuth2AuthzService.AGAuthzServiceConnection instance) {
 
         service = instance.getService();
 
@@ -167,7 +165,7 @@ public class OAuth2AuthzModule implements AuthzModule {
     /**
      *
      * @return true if accountId has a value AND that value is stored in the
-     * AuthzService
+ OAuth2AuthzService
      */
     private boolean hasAccount() {
         return (!Strings.isNullOrEmpty(accountId) && service.hasAccount(accountId));

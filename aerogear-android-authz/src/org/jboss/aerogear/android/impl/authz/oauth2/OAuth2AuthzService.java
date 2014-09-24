@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.authz;
+package org.jboss.aerogear.android.impl.authz.oauth2;
 
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthorizationException;
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzSession;
@@ -62,15 +62,14 @@ import static org.jboss.aerogear.android.impl.util.UrlUtils.appendToBaseURL;
  * This service manages tokens for Authorization sessions. It can also perform
  * basic OAuth2 Access Token/ Authorization exchange and manages refresh tokens.
  *
- * @author summers
  */
-public class AuthzService extends Service {
+public class OAuth2AuthzService extends Service {
 
     private final AuthzBinder binder = new AuthzBinder(this);
 
     private MemoryStore<OAuth2AuthzSession> sessionStore;
 
-    public AuthzService() {
+    public OAuth2AuthzService() {
     }
 
     @Override
@@ -307,7 +306,7 @@ public class AuthzService extends Service {
 
         } catch (UnsupportedEncodingException ex) {
             //Should never happen...
-            Log.d(AuthzService.class.getName(), null, ex);
+            Log.d(OAuth2AuthzService.class.getName(), null, ex);
             throw new RuntimeException(ex);
         }
     }
@@ -325,13 +324,13 @@ public class AuthzService extends Service {
 
     public static class AuthzBinder extends Binder {
 
-        private final AuthzService service;
+        private final OAuth2AuthzService service;
 
-        private AuthzBinder(AuthzService service) {
+        private AuthzBinder(OAuth2AuthzService service) {
             this.service = service;
         }
 
-        public AuthzService getService() {
+        public OAuth2AuthzService getService() {
             return service;
         }
 
@@ -342,7 +341,7 @@ public class AuthzService extends Service {
      */
     public static class AGAuthzServiceConnection implements ServiceConnection {
 
-        private AuthzService service;
+        private OAuth2AuthzService service;
         private boolean bound = false;
 
         @Override
@@ -359,7 +358,7 @@ public class AuthzService extends Service {
             bound = false;
         }
 
-        public AuthzService getService() {
+        public OAuth2AuthzService getService() {
             return service;
         }
 
