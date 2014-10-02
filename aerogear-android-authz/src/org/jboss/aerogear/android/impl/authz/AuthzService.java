@@ -52,7 +52,7 @@ import org.jboss.aerogear.android.datamanager.IdGenerator;
 import org.jboss.aerogear.android.http.HeaderAndBody;
 import org.jboss.aerogear.android.http.HttpException;
 import org.jboss.aerogear.android.http.HttpProvider;
-import org.jboss.aerogear.android.impl.datamanager.MemoryStorage;
+import org.jboss.aerogear.android.impl.datamanager.MemoryStore;
 import org.jboss.aerogear.android.impl.http.HttpRestProvider;
 
 import static org.jboss.aerogear.android.impl.util.UrlUtils.appendToBaseURL;
@@ -67,7 +67,7 @@ public class AuthzService extends Service {
 
     private final AuthzBinder binder = new AuthzBinder(this);
 
-    private MemoryStorage<OAuth2AuthzSession> sessionStore;
+    private MemoryStore<OAuth2AuthzSession> sessionStore;
 
     public AuthzService() {
     }
@@ -178,7 +178,7 @@ public class AuthzService extends Service {
 
     private void openSessionStore() {
 
-        sessionStore = new MemoryStorage<OAuth2AuthzSession>(
+        sessionStore = new MemoryStore<OAuth2AuthzSession>(
                 new IdGenerator() {
 
                     @Override
