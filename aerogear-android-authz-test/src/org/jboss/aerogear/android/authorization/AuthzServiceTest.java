@@ -17,10 +17,6 @@
 package org.jboss.aerogear.android.authorization;
 
 import com.google.gson.JsonObject;
-import java.net.URL;
-import java.util.Calendar;
-import static java.util.Calendar.HOUR;
-import java.util.HashMap;
 import org.jboss.aerogear.android.datamanager.Store;
 import org.jboss.aerogear.android.http.HeaderAndBody;
 import org.jboss.aerogear.android.http.HttpProvider;
@@ -28,17 +24,21 @@ import org.jboss.aerogear.android.impl.authz.AuthzConfig;
 import org.jboss.aerogear.android.impl.authz.AuthzService;
 import org.jboss.aerogear.android.impl.authz.OAuth2AuthorizationException;
 import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzSession;
-import org.jboss.aerogear.android.impl.datamanager.MemoryStorage;
+import org.jboss.aerogear.android.impl.datamanager.MemoryStore;
 import org.jboss.aerogear.android.impl.helper.UnitTestUtils;
 import org.jboss.aerogear.android.impl.util.PatchedActivityInstrumentationTestCase;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
+import java.net.URL;
+import java.util.Calendar;
+import java.util.HashMap;
+
+import static java.util.Calendar.HOUR;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<MainActivity> {
 
@@ -55,7 +55,7 @@ public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<Mai
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        mockStore = mock(MemoryStorage.class);
+        mockStore = mock(MemoryStore.class);
         mockProvider = mock(HttpProvider.class);
         service = new AuthzService() {
 
