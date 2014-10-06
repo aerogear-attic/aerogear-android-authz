@@ -1,11 +1,12 @@
-/*
- * Copyright 2014 JBoss by Red Hat.
+/**
+ * JBoss, Home of Professional Open Source
+ * Copyright Red Hat, Inc., and individual contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * 	http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,7 +24,7 @@ import org.jboss.aerogear.android.authorization.AuthzModule;
 public abstract class AuthorizationConfiguration<CONFIGURATION extends AuthorizationConfiguration> implements Config<CONFIGURATION> {
 
     private Collection<OnAuthorizationCreatedListener> listeners = new HashSet<OnAuthorizationCreatedListener>();
-    
+
     private String name;
 
     @Override
@@ -40,7 +41,7 @@ public abstract class AuthorizationConfiguration<CONFIGURATION extends Authoriza
     /**
      * OnAuthorizationCreatedListeners are a collection of classes to be
      * notified when the configuration of the Pipe is complete.
-     *
+     * 
      * @return the current collection.
      */
     public Collection<OnAuthorizationCreatedListener> getOnAuthorizationCreatedListeners() {
@@ -50,7 +51,7 @@ public abstract class AuthorizationConfiguration<CONFIGURATION extends Authoriza
     /**
      * OnAuthorizationCreatedListeners are a collection of classes to be
      * notified when the configuration of the Pipe is complete.
-     *
+     * 
      * @param listener new listener to add to the collection
      * @return this configuration
      */
@@ -62,7 +63,7 @@ public abstract class AuthorizationConfiguration<CONFIGURATION extends Authoriza
     /**
      * OnAuthorizationCreatedListeners are a collection of classes to be
      * notified when the configuration of the Pipe is complete.
-     *
+     * 
      * @param listeners new collection to replace the current one
      * @return this configuration
      */
@@ -72,18 +73,18 @@ public abstract class AuthorizationConfiguration<CONFIGURATION extends Authoriza
     }
 
     /**
-     *
+     * 
      * Creates a authenticationModule based on the current configuration and
      * notifies all listeners
-     *
+     * 
      * @return An AuthenticationModule based on this configuration
-     *
+     * 
      * @throws IllegalStateException if the AuthenticationModule can not be
-     * constructed.
-     *
+     *             constructed.
+     * 
      */
     public final AuthzModule asModule() {
-        
+
         AuthzModule newModule = buildModule();
         for (OnAuthorizationCreatedListener listener : getOnAuthorizationCreatedListeners()) {
             listener.onAuthorizationCreated(this, newModule);
@@ -92,14 +93,14 @@ public abstract class AuthorizationConfiguration<CONFIGURATION extends Authoriza
     }
 
     /**
-     *
+     * 
      * Validates configuration parameters and returns a AuthenticationModule
      * instance.
-     *
+     * 
      * @return An AuthenticationModule based on this configuration
-     *
+     * 
      * @throws IllegalStateException if the Pipe can not be constructed.
      */
     protected abstract AuthzModule buildModule();
-    
+
 }

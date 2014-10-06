@@ -24,7 +24,7 @@ import org.jboss.aerogear.android.RecordId;
 
 /**
  * This is a wrapper for various bits of authorization metadata.
- *
+ * 
  * For details of the various fields, see the Oauth spec.
  */
 public class OAuth2AuthzSession implements Parcelable {
@@ -93,7 +93,7 @@ public class OAuth2AuthzSession implements Parcelable {
     /**
      * AccountId represents the ID of the account type used to fetch sessions
      * for the type
-     *
+     * 
      * @return the current account type.
      */
     public String getAccountId() {
@@ -103,7 +103,7 @@ public class OAuth2AuthzSession implements Parcelable {
     /**
      * AccountId represents the ID of the account type used to fetch sessions
      * for the type
-     *
+     * 
      * @param accountId an accountId
      */
     public void setAccountId(String accountId) {

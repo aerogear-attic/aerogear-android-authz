@@ -73,7 +73,7 @@ public class UnitTestUtils {
 
     /**
      * 
-     * This method extracts a named field, replaces it with a spy, and returns 
+     * This method extracts a named field, replaces it with a spy, and returns
      * the spy.
      * 
      * @param target The object requiring a hot spy injection
@@ -85,7 +85,7 @@ public class UnitTestUtils {
      * 
      * @throws NoSuchFieldException if a field is not found. (Thrown from the java reflection API)
      * @throws IllegalArgumentException if an argument is illegal. (Thrown from the java reflection API)
-     * @throws IllegalAccessException if access is exceptional.  (Thrown from the java reflection API)
+     * @throws IllegalAccessException if access is exceptional. (Thrown from the java reflection API)
      */
     public static <T> T replaceWithSpy(Object target, String fieldName,
             Class<T> type) throws NoSuchFieldException,

@@ -29,7 +29,7 @@ import org.jboss.aerogear.android.Callback;
 /**
  * This is a helper class which fetches an access token given an authorization
  * token.
- *
+ * 
  * @author summers
  */
 public class OAuth2FetchAccess {
@@ -42,7 +42,7 @@ public class OAuth2FetchAccess {
 
     public void fetchAccessCode(final String accountId, final OAuth2Properties config, final Callback<String> callback) {
 
-        if (Looper.myLooper() == Looper.getMainLooper()) {//foreground thread
+        if (Looper.myLooper() == Looper.getMainLooper()) {// foreground thread
             new AsyncTask<Object, Void, Object>() {
 
                 @Override
@@ -65,7 +65,7 @@ public class OAuth2FetchAccess {
 
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, accountId, config);
 
-        } else { //background thread
+        } else { // background thread
             new Handler(Looper.myLooper()).post(new Runnable() {
 
                 @Override

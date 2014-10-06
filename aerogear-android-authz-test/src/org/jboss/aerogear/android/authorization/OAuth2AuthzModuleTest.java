@@ -1,18 +1,18 @@
 /**
- * JBoss, Home of Professional Open Source Copyright Red Hat, Inc., and
- * individual contributors.
+ * JBoss, Home of Professional Open Source
+ * Copyright Red Hat, Inc., and individual contributors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * 	http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.jboss.aerogear.android.authorization;
 
@@ -72,7 +72,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
     public void testCreation() throws MalformedURLException {
         OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
         config.setBaseURL(BASE_URL);
-                
+
         OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
 
         assertFalse(module.isAuthorized());
@@ -121,7 +121,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
         config.setAccountId("testAccountId");
         config.setBaseURL(BASE_URL);
-        
+
         OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
         Class<?> callbackClass = Class.forName("org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzModule$OAuth2AuthorizationCallback");
         Constructor<?> constructor = callbackClass.getDeclaredConstructor(OAuth2AuthzModule.class, Activity.class, Callback.class, ServiceConnection.class);

@@ -31,7 +31,7 @@ import static org.jboss.aerogear.android.impl.util.UrlUtils.appendToBaseURL;
 /**
  * This class displays a WebView Dialog Fragment to facilitates exchanging
  * credentials for authz tokens.
- *
+ * 
  * @author summers
  */
 public class OAuth2WebFragmentFetchAutorization {

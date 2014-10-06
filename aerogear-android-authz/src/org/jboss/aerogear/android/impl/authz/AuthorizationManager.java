@@ -1,11 +1,12 @@
-/*
- * Copyright 2014 JBoss by Red Hat.
+/**
+ * JBoss, Home of Professional Open Source
+ * Copyright Red Hat, Inc., and individual contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * 	http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,12 +23,10 @@ import java.util.Map;
 import org.jboss.aerogear.android.ConfigurationProvider;
 import org.jboss.aerogear.android.authorization.AuthzModule;
 
-
 public final class AuthorizationManager {
-        private static Map<String, AuthzModule> modules = new HashMap<String, AuthzModule>();
+    private static Map<String, AuthzModule> modules = new HashMap<String, AuthzModule>();
 
-    private static Map<Class<? extends AuthorizationConfiguration<?>>, ConfigurationProvider<?>>
-            configurationProviderMap = new HashMap<Class<? extends AuthorizationConfiguration<?>>, ConfigurationProvider<?>>();
+    private static Map<Class<? extends AuthorizationConfiguration<?>>, ConfigurationProvider<?>> configurationProviderMap = new HashMap<Class<? extends AuthorizationConfiguration<?>>, ConfigurationProvider<?>>();
 
     private static OnAuthorizationCreatedListener onAuthorizationCreatedListener = new OnAuthorizationCreatedListener() {
         @Override
@@ -39,7 +38,7 @@ public final class AuthorizationManager {
     static {
         OAuth2AuthroizationConfigurationProvider oauth2ConfigurationProvider = new OAuth2AuthroizationConfigurationProvider();
         AuthorizationManager.registerConfigurationProvider(OAuth2AuthorizationConfiguration.class, oauth2ConfigurationProvider);
-        
+
     }
 
     private AuthorizationManager() {
@@ -47,7 +46,7 @@ public final class AuthorizationManager {
 
     /**
      * 
-     * This will add a new Configuration that this Manager can build 
+     * This will add a new Configuration that this Manager can build
      * Configurations for.
      * 
      * @param <CFG> the actual Configuration type
@@ -63,18 +62,18 @@ public final class AuthorizationManager {
      * Begins a new fluent configuration stanza.
      * 
      * @param <CFG> the Configuration type.
-     * @param name an identifier which will be used to fetch the AuthzManager after 
-     * configuration is finished. 
+     * @param name an identifier which will be used to fetch the AuthzManager after
+     *            configuration is finished.
      * @param authorizationConfigurationClass the class of the configuration type.
-     *
+     * 
      * @return a AuthorizationConfiguration which can be used to build a AuthzManager object.
-     */            
+     */
     public static <CFG extends AuthorizationConfiguration<CFG>> CFG config(String name, Class<CFG> authorizationConfigurationClass) {
 
         @SuppressWarnings("unchecked")
         ConfigurationProvider<? extends AuthorizationConfiguration<CFG>> provider =
                 (ConfigurationProvider<? extends AuthorizationConfiguration<CFG>>)
-                        configurationProviderMap.get(authorizationConfigurationClass);
+                configurationProviderMap.get(authorizationConfigurationClass);
 
         if (provider == null) {
             throw new IllegalArgumentException("Configuration not registered!");
@@ -88,8 +87,9 @@ public final class AuthorizationManager {
 
     /**
      * Fetches a named module
+     * 
      * @param name the name of the AuthzManager given in {@link AuthorizationManager#config(java.lang.String, java.lang.Class) }
-     *
+     * 
      * @return the named AuthzModule or null
      */
     public static AuthzModule getModule(String name) {

@@ -45,10 +45,10 @@ final class OAuth2Properties {
     private AuthzType type = AuthzTypes.OAUTH2;
 
     /**
-     *
+     * 
      * @param baseURL This is the url which endpoints will be appended to.
      * @param name A name to reference the AuthorizationModule which this config
-     * will create.
+     *            will create.
      */
     public OAuth2Properties(URL baseURL, String name) {
         this.baseURL = baseURL;
@@ -57,7 +57,7 @@ final class OAuth2Properties {
 
     /**
      * The baseURL is the url which endpoints will be appended to.
-     *
+     * 
      * @return the current baseURL
      */
     public URL getBaseURL() {
@@ -67,7 +67,7 @@ final class OAuth2Properties {
     /**
      * The authzEnpoint defines the endpoint which the Authorization module will
      * use to obtain an authorization token.
-     *
+     * 
      * @return the current authzEndpoint
      */
     public String getAuthzEndpoint() {
@@ -77,7 +77,7 @@ final class OAuth2Properties {
     /**
      * The authzEnpoint defines the endpoint which the Authorization module will
      * use to obtain an authorization token.
-     *
+     * 
      * @param authzEndpoint a new authzEndpoint
      */
     public void setAuthzEndpoint(String authzEndpoint) {
@@ -87,7 +87,7 @@ final class OAuth2Properties {
     /**
      * The redirect URL is the url which handles consuming a response from the
      * authorization server.
-     *
+     * 
      * @return the current redirectURL.
      */
     public String getRedirectURL() {
@@ -97,9 +97,9 @@ final class OAuth2Properties {
     /**
      * The redirect URL is the url which handles consuming a response from the
      * authorization server.
-     *
+     * 
      * @param redirectURL a new redirectURL
-     *
+     * 
      */
     public void setRedirectURL(String redirectURL) {
         this.redirectURL = redirectURL;
@@ -108,9 +108,9 @@ final class OAuth2Properties {
     /**
      * The accessTokenEndpoint is responsible for generating an accesstoken for
      * an authorized user.
-     *
+     * 
      * @return the current accessTokenEndpoint
-     *
+     * 
      */
     public String getAccessTokenEndpoint() {
         return accessTokenEndpoint;
@@ -119,19 +119,19 @@ final class OAuth2Properties {
     /**
      * The accessTokenEndpoint is responsible for generating an accesstoken for
      * an authorized user.
-     *
+     * 
      * @param accessTokenEndpoint a new accessTokenEndpoint
-     *
+     * 
      */
     public void setAccessTokenEndpoint(String accessTokenEndpoint) {
         this.accessTokenEndpoint = accessTokenEndpoint;
     }
 
     /**
-     *
+     * 
      * Scopes are a list of permissions the application will request at
      * Authorization.
-     *
+     * 
      * @return a copy of the current list of scopes
      */
     public List<String> getScopes() {
@@ -139,10 +139,10 @@ final class OAuth2Properties {
     }
 
     /**
-     *
+     * 
      * Scopes are a list of permissions the application will request at
      * Authorization.
-     *
+     * 
      * @param scopes a new list of scopes to replace the current one
      */
     public void setScopes(List<String> scopes) {
@@ -152,7 +152,7 @@ final class OAuth2Properties {
     /**
      * The client ID is the ID assigned to the application by the service
      * provider.
-     *
+     * 
      * @return the current clientID
      */
     public String getClientId() {
@@ -162,7 +162,7 @@ final class OAuth2Properties {
     /**
      * The client ID is the ID assigned to the application by the service
      * provider.
-     *
+     * 
      * @param clientId a new client ID
      */
     public void setClientId(String clientId) {
@@ -171,7 +171,7 @@ final class OAuth2Properties {
 
     /**
      * The client secret is assigned to the application by the service provider.
-     *
+     * 
      * @return the current clientSecret
      */
     public String getClientSecret() {
@@ -180,7 +180,7 @@ final class OAuth2Properties {
 
     /**
      * The client secret is assigned to the application by the service provider.
-     *
+     * 
      * @param clientSecret a new client secret
      */
     public void setClientSecret(String clientSecret) {
@@ -189,7 +189,7 @@ final class OAuth2Properties {
 
     /**
      * Name refers to the name of the module this config will become
-     *
+     * 
      * @return the current name
      */
     public String getName() {
@@ -198,9 +198,9 @@ final class OAuth2Properties {
 
     /**
      * The Type of module this config will become.
-     *
+     * 
      * Defaults to {@link AuthzTypes#OAUTH2}
-     *
+     * 
      * @return the current type.
      */
     public AuthzType getType() {
@@ -209,9 +209,9 @@ final class OAuth2Properties {
 
     /**
      * The Type of module this config will become.
-     *
+     * 
      * Defaults to {@link AuthzTypes#OAUTH2}
-     *
+     * 
      * @param type a new type.
      */
     public void setType(AuthzType type) {
@@ -219,10 +219,9 @@ final class OAuth2Properties {
     }
 
     /**
-     * The account ID parameter is to identify it ID of the
-     * {@link OAuth2AuthzSession} which will be used to store the information.
+     * The account ID parameter is to identify it ID of the {@link OAuth2AuthzSession} which will be used to store the information.
      * It is unique per app and generated by you, the developer.
-     *
+     * 
      * @return the current account
      */
     public String getAccountId() {
@@ -230,8 +229,7 @@ final class OAuth2Properties {
     }
 
     /**
-     * The account ID parameter is to identify it ID of the
-     * {@link OAuth2AuthzSession} which will be used to store the information.
+     * The account ID parameter is to identify it ID of the {@link OAuth2AuthzSession} which will be used to store the information.
      * It is unique per app and generated by you, the developer.
      * 
      * @param accountId a new accountId

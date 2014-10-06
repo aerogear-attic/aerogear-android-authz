@@ -46,7 +46,6 @@ import java.util.Map;
 import java.util.UUID;
 import org.jboss.aerogear.android.datamanager.IdGenerator;
 
-
 import org.jboss.aerogear.android.http.HeaderAndBody;
 import org.jboss.aerogear.android.http.HttpException;
 import org.jboss.aerogear.android.http.HttpProvider;
@@ -58,7 +57,7 @@ import static org.jboss.aerogear.android.impl.util.UrlUtils.appendToBaseURL;
 /**
  * This service manages tokens for Authorization sessions. It can also perform
  * basic OAuth2 Access Token/ Authorization exchange and manages refresh tokens.
- *
+ * 
  */
 public class OAuth2AuthzService extends Service {
 
@@ -77,12 +76,12 @@ public class OAuth2AuthzService extends Service {
 
     /**
      * This will exchange an Authorization token for an Access Token
-     *
+     * 
      * @param accountId the ID for the {@link OAuth2AuthzSession}
-     * @param config    the config
+     * @param config the config
      * @return an accesstoken
      * @throws OAuth2AuthorizationException if something went wrong in the
-     *                                      exchange
+     *             exchange
      */
     public String fetchAccessToken(String accountId, OAuth2Properties config) throws OAuth2AuthorizationException {
         OAuth2AuthzSession storedAccount = sessionStore.read(accountId);
@@ -108,7 +107,7 @@ public class OAuth2AuthzService extends Service {
 
     /**
      * Put a session into the store.
-     *
+     * 
      * @param account a new session
      */
     public void addAccount(OAuth2AuthzSession account) {
@@ -124,7 +123,7 @@ public class OAuth2AuthzService extends Service {
     /**
      * Will check if there is an account which has previously been granted an
      * authorization code and access code
-     *
+     * 
      * @param accountId the accountId to check
      * @return true if there is a session for the account.
      */
@@ -139,7 +138,7 @@ public class OAuth2AuthzService extends Service {
 
     /**
      * Returns the OAuth2AuthzSession for accountId if any
-     *
+     * 
      * @param accountId the accountId to look up
      * @return an OAuth2AuthzSession or null
      */
@@ -149,7 +148,7 @@ public class OAuth2AuthzService extends Service {
 
     /**
      * Fetches all OAuth2AuthzSessions in the system.
-     *
+     * 
      * @return all OAuth2AuthzSession's in the system
      */
     public List<String> getAccounts() {
@@ -183,8 +182,6 @@ public class OAuth2AuthzService extends Service {
                         return UUID.randomUUID().toString();
                     }
                 });
-
-        
 
     }
 
@@ -284,8 +281,8 @@ public class OAuth2AuthzService extends Service {
             String accessToken = jsonResponseObject.get("access_token").getAsString();
             storedAccount.setAccessToken(accessToken);
 
-            //Will need to check this one day
-            //String tokenType = jsonResponseObject.get("token_type").getAsString();
+            // Will need to check this one day
+            // String tokenType = jsonResponseObject.get("token_type").getAsString();
             if (jsonResponseObject.has("expires_in")) {
                 Long expiresIn = jsonResponseObject.get("expires_in").getAsLong();
                 Long expires_on = new Date().getTime() + expiresIn * 1000;
@@ -302,7 +299,7 @@ public class OAuth2AuthzService extends Service {
             storedAccount.setAuthorizationCode("");
 
         } catch (UnsupportedEncodingException ex) {
-            //Should never happen...
+            // Should never happen...
             Log.d(OAuth2AuthzService.class.getName(), null, ex);
             throw new RuntimeException(ex);
         }
@@ -311,7 +308,7 @@ public class OAuth2AuthzService extends Service {
     /**
      * This method allows an implementation to change how the HttpProvider is
      * fetched. Override is mostly used for testing.
-     *
+     * 
      * @param url the url endpoint
      * @return a httpProvider
      */
@@ -343,7 +340,7 @@ public class OAuth2AuthzService extends Service {
 
         @Override
         public void onServiceConnected(ComponentName className,
-                                       IBinder iBinder) {
+                IBinder iBinder) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             AuthzBinder binder = (AuthzBinder) iBinder;
             this.service = binder.service;

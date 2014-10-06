@@ -135,7 +135,7 @@ public class OAuthWebViewDialog extends DialogFragment {
         webView.loadUrl(authorizeUrl);
         webView.setWebViewClient(client);
 
-        //activates JavaScript (just in case)
+        // activates JavaScript (just in case)
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
