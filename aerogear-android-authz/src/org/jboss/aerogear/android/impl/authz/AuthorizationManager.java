@@ -88,7 +88,7 @@ public final class AuthorizationManager {
 
     /**
      * Fetches a named module
-     * @param name the name of the AuthzManager given in {@link AuthenticationManager#config(java.lang.String, java.lang.Class) }
+     * @param name the name of the AuthzManager given in {@link AuthorizationManager#config(java.lang.String, java.lang.Class) }
      *
      * @return the named AuthzModule or null
      */
