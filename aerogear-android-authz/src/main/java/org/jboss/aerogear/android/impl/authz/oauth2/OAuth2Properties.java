@@ -17,14 +17,12 @@
 package org.jboss.aerogear.android.impl.authz.oauth2;
 
 import android.util.Pair;
-import org.jboss.aerogear.android.authorization.AuthzType;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.jboss.aerogear.android.impl.authz.AuthzTypes;
 
 /**
  * Authorization configuration class.
@@ -42,7 +40,6 @@ final class OAuth2Properties {
     private String accountId = "";
     private Set<Pair<String, String>> additionalAuthorizationParams = new HashSet<Pair<String, String>>();
     private Set<Pair<String, String>> additionalAccessParams = new HashSet<Pair<String, String>>();
-    private AuthzType type = AuthzTypes.OAUTH2;
 
     /**
      * 
@@ -194,28 +191,6 @@ final class OAuth2Properties {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * The Type of module this config will become.
-     * 
-     * Defaults to {@link AuthzTypes#OAUTH2}
-     * 
-     * @return the current type.
-     */
-    public AuthzType getType() {
-        return type;
-    }
-
-    /**
-     * The Type of module this config will become.
-     * 
-     * Defaults to {@link AuthzTypes#OAUTH2}
-     * 
-     * @param type a new type.
-     */
-    public void setType(AuthzType type) {
-        this.type = type;
     }
 
     /**
