@@ -248,6 +248,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
         params.setAccessTokenEndpoint(accessTokenEndpoint);
         params.setAccountId(accountId);
         params.setAuthzEndpoint(authzEndpoint);
+        params.setRefreshEndpoint(refreshEndpoint);
         params.setClientId(clientId);
         params.setClientSecret(clientSecret);
         params.setRedirectURL(redirectURL);
@@ -277,7 +278,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
         this.baseURL = baseURL;
         return this;
     }
-    
+
     /**
      * The refresh endpoint is the path to the location of the refresh token.
      * 

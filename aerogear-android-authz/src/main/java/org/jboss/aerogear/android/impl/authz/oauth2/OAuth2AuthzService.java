@@ -208,7 +208,7 @@ public class OAuth2AuthzService extends Service {
             }
         }
 
-        runAccountAction(storedAccount, config, data);
+        runAccountAction(storedAccount, config, data, appendToBaseURL(config.getBaseURL(), config.getAccessTokenEndpoint()));
 
     }
 
@@ -232,14 +232,14 @@ public class OAuth2AuthzService extends Service {
             }
         }
 
-        runAccountAction(storedAccount, config, data);
+        runAccountAction(storedAccount, config, data, appendToBaseURL(config.getBaseURL(), config.getRefreshEndpoint()));
     }
 
-    private void runAccountAction(OAuth2AuthzSession storedAccount, OAuth2Properties config, final Map<String, String> data) throws OAuth2AuthorizationException {
+    private void runAccountAction(OAuth2AuthzSession storedAccount, OAuth2Properties config, final Map<String, String> data, URL endpoint)
+            throws OAuth2AuthorizationException {
         try {
-            final URL accessTokenEndpoint = appendToBaseURL(config.getBaseURL(), config.getAccessTokenEndpoint());
 
-            final HttpProvider provider = getHttpProvider(accessTokenEndpoint);
+            final HttpProvider provider = getHttpProvider(endpoint);
             final String formTemplate = "%s=%s";
             provider.setDefaultHeader(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded");
 
