@@ -34,7 +34,7 @@
         <dexmaker.version>1.0</dexmaker.version>
         <dexmaker.mockito.version>1.0</dexmaker.mockito.version>
     </properties>
-    
+
     <dependencies>
 
         <dependency>
@@ -85,11 +85,11 @@
                     <artifactId>hamcrest-core</artifactId>
                     <groupId>org.hamcrest</groupId>
                 </exclusion>
-            
+
             </exclusions>
         </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -106,6 +106,12 @@
                         <path>${env.ANDROID_HOME}</path>
                         <platform>${android.platform}</platform>
                     </sdk>
+                    <dex>
+                        <jvmArguments>
+                            <jvmArgument>-Xms256m</jvmArgument>
+                            <jvmArgument>-Xmx2048m</jvmArgument>
+                        </jvmArguments>
+                    </dex>
                 </configuration>
                 <extensions>true</extensions>
             </plugin>
