@@ -32,6 +32,7 @@ final class OAuth2Properties {
     private final URL baseURL;
     private final String name;
     private String authzEndpoint = "";
+    private String refreshEndpoint = "";
     private String redirectURL = "";
     private String accessTokenEndpoint = "";
     private List<String> scopes = new ArrayList<String>();
@@ -214,7 +215,8 @@ final class OAuth2Properties {
     }
 
     /**
-     * Sometimes a implementation will need additional parameters when authorization is performed.
+     * Sometimes a implementation will need additional parameters when
+     * authorization is performed.
      * 
      * @return the current set of authorization parameters.
      */
@@ -223,12 +225,36 @@ final class OAuth2Properties {
     }
 
     /**
-     * Sometimes a implementation will need additional parameters when access is performed.
+     * Sometimes a implementation will need additional parameters when access is
+     * performed.
      * 
      * @return the current set of authorization parameters.
      */
     public Set<Pair<String, String>> getAdditionalAccessParams() {
         return additionalAccessParams;
+    }
+
+    /**
+     * The refresh endpoint is the path to the location of the refresh token.
+     * 
+     * Defaults to an empty String.
+     * 
+     * @return the current refreshEndpoint
+     */
+
+    public String getRefreshEndpoint() {
+        return refreshEndpoint;
+    }
+
+    /**
+     * The refresh endpoint is the path to the location of the refresh token.
+     * 
+     * Defaults to an empty String.
+     * 
+     * @param refreshEndpoint a new endpoint.
+     */
+    public void setRefreshEndpoint(String refreshEndpoint) {
+        this.refreshEndpoint = refreshEndpoint;
     }
 
 }

@@ -29,6 +29,7 @@ import org.jboss.aerogear.android.impl.authz.AuthorizationConfiguration;
 public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration<OAuth2AuthorizationConfiguration> implements Config<OAuth2AuthorizationConfiguration> {
 
     private String authzEndpoint = "";
+    private String refreshEndpoint = "";
     private String redirectURL = "";
     private URL baseURL;
     private String accessTokenEndpoint = "";
@@ -274,6 +275,31 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
      */
     public OAuth2AuthorizationConfiguration setBaseURL(URL baseURL) {
         this.baseURL = baseURL;
+        return this;
+    }
+    
+    /**
+     * The refresh endpoint is the path to the location of the refresh token.
+     * 
+     * Defaults to an empty String.
+     * 
+     * @return the current baseURL
+     */
+    public String getRefreshEndpoint() {
+        return refreshEndpoint;
+    }
+
+    /**
+     * The refresh endpoint is the path to the location of the refresh token.
+     * 
+     * Defaults to an empty String.
+     * 
+     * @param refreshEndpoint a new endpoint.
+     * 
+     * @return the current configuration.
+     */
+    public OAuth2AuthorizationConfiguration setRefreshEndpoint(String refreshEndpoint) {
+        this.refreshEndpoint = refreshEndpoint;
         return this;
     }
 
