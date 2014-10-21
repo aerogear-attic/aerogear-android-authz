@@ -24,7 +24,6 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 import android.util.Pair;
-
 import com.google.common.base.Function;
 import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
@@ -32,25 +31,21 @@ import com.google.common.net.HttpHeaders;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.jboss.aerogear.android.DataManager;
+import org.jboss.aerogear.android.datamanager.IdGenerator;
+import org.jboss.aerogear.android.http.HeaderAndBody;
+import org.jboss.aerogear.android.http.HttpException;
+import org.jboss.aerogear.android.http.HttpProvider;
+import org.jboss.aerogear.android.impl.datamanager.SQLStore;
+import org.jboss.aerogear.android.impl.datamanager.SQLStoreConfiguration;
+import org.jboss.aerogear.android.impl.http.HttpRestProvider;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import org.jboss.aerogear.android.datamanager.IdGenerator;
-
-import org.jboss.aerogear.android.http.HeaderAndBody;
-import org.jboss.aerogear.android.http.HttpException;
-import org.jboss.aerogear.android.http.HttpProvider;
-import org.jboss.aerogear.android.impl.datamanager.MemoryStore;
-import org.jboss.aerogear.android.impl.http.HttpRestProvider;
+import java.util.*;
 
 import static org.jboss.aerogear.android.impl.util.UrlUtils.appendToBaseURL;
 
@@ -63,7 +58,7 @@ public class OAuth2AuthzService extends Service {
 
     private final AuthzBinder binder = new AuthzBinder(this);
 
-    private MemoryStore<OAuth2AuthzSession> sessionStore;
+    private SQLStore<OAuth2AuthzSession> sessionStore;
 
     public OAuth2AuthzService() {
     }
@@ -71,7 +66,6 @@ public class OAuth2AuthzService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
     }
 
     /**
@@ -173,16 +167,18 @@ public class OAuth2AuthzService extends Service {
     }
 
     private void openSessionStore() {
-
-        sessionStore = new MemoryStore<OAuth2AuthzSession>(
-                new IdGenerator() {
-
+        DataManager.config("sessionStore", SQLStoreConfiguration.class)
+                .forClass(OAuth2AuthzSession.class)
+                .withContext(getApplicationContext())
+                .withIdGenerator(new IdGenerator() {
                     @Override
                     public Serializable generate() {
                         return UUID.randomUUID().toString();
                     }
-                });
+                }).store();
 
+        sessionStore = (SQLStore<OAuth2AuthzSession>) DataManager.getStore("sessionStore");
+        sessionStore.openSync();
     }
 
     private void exchangeAuthorizationCodeForAccessToken(OAuth2AuthzSession storedAccount, OAuth2Properties config) throws OAuth2AuthorizationException {
