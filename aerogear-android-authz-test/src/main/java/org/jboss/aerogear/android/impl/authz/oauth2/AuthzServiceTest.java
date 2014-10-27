@@ -28,7 +28,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import static java.util.Calendar.HOUR;
-import org.jboss.aerogear.android.authorization.MainActivity;
+import org.jboss.aerogear.android.authorization.test.MainActivity;
 import org.jboss.aerogear.android.datamanager.Store;
 import org.jboss.aerogear.android.http.HeaderAndBody;
 import org.jboss.aerogear.android.http.HttpProvider;

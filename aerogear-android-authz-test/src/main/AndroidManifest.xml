@@ -2,19 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           android:versionCode="1"
           android:versionName="1.0"
-          package="org.jboss.aerogear.android.authorization">
+          package="org.jboss.aerogear.android.authorization.test">
 
     <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19"/>
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="org.jboss.aerogear.android.authorization" />
+        android:targetPackage="org.jboss.aerogear.android.authorization.test" />
 
     <application
         android:label="@string/app_name" >
         <uses-library android:name="android.test.runner" />
 
         <activity
-            android:name="org.jboss.aerogear.android.authorization.MainActivity"
+            android:name="org.jboss.aerogear.android.authorization.test.MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
