@@ -34,22 +34,16 @@
         <dexmaker.version>1.0</dexmaker.version>
         <dexmaker.mockito.version>1.0</dexmaker.mockito.version>
     </properties>
-    
+
     <dependencies>
 
         <dependency>
             <groupId>org.jboss.aerogear</groupId>
             <artifactId>aerogear-android-authz</artifactId>
             <version>${project.version}</version>
-            <type>apklib</type>
+            <type>aar</type>
         </dependency>
-        <dependency>
-            <groupId>org.jboss.aerogear</groupId>
-            <artifactId>aerogear-android-authz</artifactId>
-            <version>${project.version}</version>
-            <scope>provided</scope>
-            <type>jar</type>
-        </dependency>
+        
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
@@ -85,11 +79,11 @@
                     <artifactId>hamcrest-core</artifactId>
                     <groupId>org.hamcrest</groupId>
                 </exclusion>
-            
+
             </exclusions>
         </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -106,6 +100,12 @@
                         <path>${env.ANDROID_HOME}</path>
                         <platform>${android.platform}</platform>
                     </sdk>
+                    <dex>
+                        <jvmArguments>
+                            <jvmArgument>-Xms256m</jvmArgument>
+                            <jvmArgument>-Xmx2048m</jvmArgument>
+                        </jvmArguments>
+                    </dex>
                 </configuration>
                 <extensions>true</extensions>
             </plugin>
