@@ -263,7 +263,14 @@ public class OAuth2AuthzService extends Service {
                     JsonObject jsonResponseObject = response.getAsJsonObject();
                     String error = "";
                     if (jsonResponseObject.has("error")) {
-                        error = jsonResponseObject.get("error").getAsString();
+                        JsonElement errorObject = jsonResponseObject.get("error");
+                        if (errorObject.isJsonPrimitive())  {
+                            error = errorObject.getAsString();
+                        } else {
+                            error = errorObject.toString();
+                        }
+                        
+                        
                     }
 
                     throw new OAuth2AuthorizationException(error);
