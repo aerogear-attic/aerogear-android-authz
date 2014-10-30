@@ -17,6 +17,7 @@
 package org.jboss.aerogear.android.impl.authz.oauth2;
 
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,7 +49,7 @@ public class OAuthWebViewDialog extends DialogFragment {
     private WebView webView;
     private ProgressBar progressBar;
     private String authorizeUrl;
-    private OAuthViewClient client = new OAuthViewClient() {
+    final private OAuthViewClient client = new OAuthViewClient() {
 
         @Override
         public void onPageFinished(WebView view, String url) {
@@ -160,6 +161,14 @@ public class OAuthWebViewDialog extends DialogFragment {
         return v;
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog); 
+        if (client.receiver != null) {
+            client.receiver.receiveOAuthError(OAuthReceiver.DISMISS_ERROR);
+        }
+    }
+
     public void setReceiver(OAuthReceiver receiver) {
         client.receiver = receiver;
     }
@@ -170,6 +179,8 @@ public class OAuthWebViewDialog extends DialogFragment {
 
     public interface OAuthReceiver {
 
+        public static final String DISMISS_ERROR = "dialog_dismissed";
+        
         void receiveOAuthCode(String code);
 
         public void receiveOAuthError(String error);

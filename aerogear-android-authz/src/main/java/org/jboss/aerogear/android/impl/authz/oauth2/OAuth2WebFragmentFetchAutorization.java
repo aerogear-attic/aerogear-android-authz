@@ -95,12 +95,14 @@ public class OAuth2WebFragmentFetchAutorization {
         dialog.setReceiver(new OAuthWebViewDialog.OAuthReceiver() {
             @Override
             public void receiveOAuthCode(String code) {
+                dialog.removeReceive();
                 dialog.dismiss();
                 callback.onSuccess(code);
             }
 
             @Override
             public void receiveOAuthError(final String error) {
+                dialog.removeReceive();
                 dialog.dismiss();
                 callback.onFailure(new OAuth2AuthorizationException(error));
             }
