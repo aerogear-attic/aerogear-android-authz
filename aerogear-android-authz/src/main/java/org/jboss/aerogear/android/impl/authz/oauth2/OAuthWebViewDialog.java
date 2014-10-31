@@ -19,6 +19,7 @@ package org.jboss.aerogear.android.impl.authz.oauth2;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -61,10 +62,46 @@ public class OAuthWebViewDialog extends DialogFragment {
     };
     private String redirectURL;
 
-    private static class OAuthViewClient extends WebViewClient {
+    private class OAuthViewClient extends WebViewClient {
 
         private OAuthReceiver receiver;
         private String redirectURL;
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            if (url.startsWith(redirectURL)) {
+                if (url.contains("code=")) {
+                    final String token = fetchToken(url);
+                    Log.d("TOKEN", token);
+                    if (receiver != null) {
+                        final OAuthReceiver receiverRef = receiver;
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                receiverRef.receiveOAuthCode(token);
+                            }
+                        });
+                    }
+                    return;
+                } else if (url.contains("error=")) {
+                    final String error = fetchError(url);
+                    Log.d("ERROR", error);
+                    if (receiver != null) {
+                        final OAuthReceiver receiverRef = receiver;
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                receiverRef.receiveOAuthError(error);
+                            }
+                        });
+                    }
+                    return;
+                }
+            }
+
+            super.onPageFinished(view, url);
+
+        }
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -139,6 +176,10 @@ public class OAuthWebViewDialog extends DialogFragment {
         // activates JavaScript (just in case)
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            webSettings.setUseWideViewPort(true);
+            webSettings.setLoadWithOverviewMode(true);
+        }
 
     }
 
