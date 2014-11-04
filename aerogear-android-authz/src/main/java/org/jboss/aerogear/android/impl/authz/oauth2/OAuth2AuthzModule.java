@@ -189,9 +189,10 @@ public class OAuth2AuthzModule implements AuthzModule {
      * refreshed or if the status wasn't of UNAUTHORIZED or FORBIDDEN.
      */
     public boolean handleError(HttpException exception) {
+
         if (exception.getStatusCode() == HttpStatus.SC_UNAUTHORIZED
                 || exception.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
-            return refreshAccess();
+            return isAuthorized() && refreshAccess();
         } else {
             return false;
         }
