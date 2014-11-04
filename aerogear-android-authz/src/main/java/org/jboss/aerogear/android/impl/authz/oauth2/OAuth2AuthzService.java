@@ -319,6 +319,15 @@ public class OAuth2AuthzService extends Service {
         return new HttpRestProvider(url);
     }
 
+    /**
+     * Removes the account with the provided ID
+     * 
+     * @param accountId 
+     */
+    public void removeAccount(String accountId) {
+        sessionStore.remove(accountId);
+    }
+
     public static class AuthzBinder extends Binder {
 
         private final OAuth2AuthzService service;

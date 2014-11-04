@@ -198,6 +198,11 @@ public class OAuth2AuthzModule implements AuthzModule {
         }
     }
 
+    @Override
+    public void deleteAccount() {
+        service.removeAccount(accountId);
+    }
+
     private class OAuth2AccessCallback implements Callback<String> {
 
         private final Activity callingActivity;
