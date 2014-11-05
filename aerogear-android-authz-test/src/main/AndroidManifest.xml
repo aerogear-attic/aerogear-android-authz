@@ -4,7 +4,8 @@
           android:versionName="1.0"
           package="org.jboss.aerogear.android.authorization.test">
 
-    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19"/>
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="19"/>
+    
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
         android:targetPackage="org.jboss.aerogear.android.authorization.test" />
