@@ -30,6 +30,7 @@ import com.google.common.collect.Collections2;
 import com.google.common.net.HttpHeaders;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import org.jboss.aerogear.android.DataManager;
 import org.jboss.aerogear.android.datamanager.IdGenerator;
@@ -59,6 +60,7 @@ public class OAuth2AuthzService extends Service {
     private final AuthzBinder binder = new AuthzBinder(this);
 
     private SQLStore<OAuth2AuthzSession> sessionStore;
+    private static final String TAG = OAuth2AuthzService.class.getSimpleName();
 
     public OAuth2AuthzService() {
     }
@@ -278,24 +280,52 @@ public class OAuth2AuthzService extends Service {
                     throw exception;
                 }
             }
-            JsonElement response = new JsonParser().parse(new String(headerAndBody.getBody()));
-            JsonObject jsonResponseObject = response.getAsJsonObject();
+            String responseString = new String(headerAndBody.getBody());
 
-            String accessToken = jsonResponseObject.get("access_token").getAsString();
-            storedAccount.setAccessToken(accessToken);
+            try {
+                JsonElement response = new JsonParser().parse(responseString);
+                JsonObject jsonResponseObject = response.getAsJsonObject();
 
-            // Will need to check this one day
-            // String tokenType = jsonResponseObject.get("token_type").getAsString();
-            if (jsonResponseObject.has("expires_in")) {
-                Long expiresIn = jsonResponseObject.get("expires_in").getAsLong();
-                Long expires_on = new Date().getTime() + expiresIn * 1000;
-                storedAccount.setExpires_on(expires_on);
-            }
+                String accessToken = jsonResponseObject.get("access_token").getAsString();
+                storedAccount.setAccessToken(accessToken);
 
-            if (jsonResponseObject.has("refresh_token")) {
-                String refreshToken = jsonResponseObject.get("refresh_token").getAsString();
-                if (!Strings.isNullOrEmpty(refreshToken)) {
-                    storedAccount.setRefreshToken(refreshToken);
+                // Will need to check this one day
+                // String tokenType = jsonResponseObject.get("token_type").getAsString();
+                if (jsonResponseObject.has("expires_in")) {
+                    Long expiresIn = jsonResponseObject.get("expires_in").getAsLong();
+                    Long expires_on = new Date().getTime() + expiresIn * 1000;
+                    storedAccount.setExpires_on(expires_on);
+                }
+
+                if (jsonResponseObject.has("refresh_token")) {
+                    String refreshToken = jsonResponseObject.get("refresh_token").getAsString();
+                    if (!Strings.isNullOrEmpty(refreshToken)) {
+                        storedAccount.setRefreshToken(refreshToken);
+                    }
+                }
+            } catch (JsonParseException parseEx){
+                try {
+                    //Check if body is http form format
+                    String[] values = responseString.split("&");
+                    for (String pair : values) {
+                        String property[] = pair.split("=");
+                        String key = property[0];
+                        String value = property[1];
+                        if ("access_token".equals(key)) {
+                            storedAccount.setAccessToken(value);
+                        } else if ("expires_in".equals(key)) {
+                            Long expiresIn = Long.parseLong(value);
+                            Long expires_on = new Date().getTime() + expiresIn * 1000;
+                            storedAccount.setExpires_on(expires_on);
+                        } else if ("refresh_token".equals(key)) {
+                            if (!Strings.isNullOrEmpty(value)) {
+                                storedAccount.setRefreshToken(value);
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage(), e);
+                    throw new OAuth2AuthorizationException(responseString);
                 }
             }
 
