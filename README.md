@@ -8,7 +8,7 @@ AeroGear Android Authz will give developers the ability to integrate their Andro
 
 ## Building
 
-Until the 2.0 modules are stable and in Maven Central, we need to build the projects first.  Please take a look of the [step by step guide](http://aerogear.org/docs/guides/aerogear-android/HowToBuildAeroGearAndroidLibrary/) on our website.
+Until the 2.0 modules are stable and in Maven Central, we need to build the projects first.  Please take a look of the [step by step guide](http://aerogear.org/docs/guides/aerogear-android/how-to-build-aerogear-android/) on our website.
 
 *The following dependencies are required to build this project:*
 
