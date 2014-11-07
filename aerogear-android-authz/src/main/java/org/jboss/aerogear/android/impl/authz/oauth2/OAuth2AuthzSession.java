@@ -18,9 +18,9 @@ package org.jboss.aerogear.android.impl.authz.oauth2;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import java.util.Date;
-import java.util.Objects;
 import org.jboss.aerogear.android.RecordId;
+
+import java.util.Date;
 
 /**
  * This is a wrapper for various bits of authorization metadata.
@@ -111,45 +111,32 @@ public class OAuth2AuthzSession implements Parcelable {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.clientId);
-        hash = 71 * hash + Objects.hashCode(this.accessToken);
-        hash = 71 * hash + Objects.hashCode(this.authorizationCode);
-        hash = 71 * hash + Objects.hashCode(this.refreshToken);
-        hash = 71 * hash + Objects.hashCode(this.accountId);
-        hash = 71 * hash + (int) (this.expires_on ^ (this.expires_on >>> 32));
-        return hash;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || ((Object) this).getClass() != o.getClass()) return false;
+
+        OAuth2AuthzSession that = (OAuth2AuthzSession) o;
+
+        if (expires_on != that.expires_on) return false;
+        if (accessToken != null ? !accessToken.equals(that.accessToken) : that.accessToken != null) return false;
+        if (accountId != null ? !accountId.equals(that.accountId) : that.accountId != null) return false;
+        if (authorizationCode != null ? !authorizationCode.equals(that.authorizationCode) : that.authorizationCode != null)
+            return false;
+        if (clientId != null ? !clientId.equals(that.clientId) : that.clientId != null) return false;
+        if (refreshToken != null ? !refreshToken.equals(that.refreshToken) : that.refreshToken != null) return false;
+
+        return true;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final OAuth2AuthzSession other = (OAuth2AuthzSession) obj;
-        if (!Objects.equals(this.clientId, other.clientId)) {
-            return false;
-        }
-        if (!Objects.equals(this.accessToken, other.accessToken)) {
-            return false;
-        }
-        if (!Objects.equals(this.authorizationCode, other.authorizationCode)) {
-            return false;
-        }
-        if (!Objects.equals(this.refreshToken, other.refreshToken)) {
-            return false;
-        }
-        if (!Objects.equals(this.accountId, other.accountId)) {
-            return false;
-        }
-        if (this.expires_on != other.expires_on) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        int result = accountId != null ? accountId.hashCode() : 0;
+        result = 31 * result + (clientId != null ? clientId.hashCode() : 0);
+        result = 31 * result + (accessToken != null ? accessToken.hashCode() : 0);
+        result = 31 * result + (authorizationCode != null ? authorizationCode.hashCode() : 0);
+        result = 31 * result + (refreshToken != null ? refreshToken.hashCode() : 0);
+        result = 31 * result + (int) (expires_on ^ (expires_on >>> 32));
+        return result;
     }
 
     @Override
