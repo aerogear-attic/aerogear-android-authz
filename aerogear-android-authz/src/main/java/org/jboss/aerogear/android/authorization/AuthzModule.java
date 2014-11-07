@@ -31,45 +31,45 @@ import org.jboss.aerogear.android.pipeline.Pipe;
 public interface AuthzModule extends PipeModule {
 
     /**
-     *
+     * 
      * If a module is Authorized that means that it can be used to provide
      * authorization meta-data to calling code.
-     *
+     * 
      * @return if the module is in a state that allows it to be used.
      */
     public boolean isAuthorized();
 
     /**
-     *
+     * 
      * This function checks if a module has all of the necessary information to
      * make a authorized request. This method does not check the state of those
      * tokens. For that you should use {@link AuthzModule#isAuthorized()
      * }
-     *
+     * 
      * @return if the module has completed Authorization.
      */
     public boolean hasCredentials();
 
     /**
-     *
+     * 
      * Begin requesting access for the application. This method MUST be
      * asynchronous. An implementation MAY start a new activity, but the calling
      * Activity MUST handle the response itself.
-     *
+     * 
      * @param activity the calling activity.
      * @param callback a callback to be called upon completion of the
-     * authorization action.
+     *            authorization action.
      */
     public void requestAccess(Activity activity, Callback<String> callback);
 
     /**
-     *
+     * 
      * Refreshing access will synchronously check the current of the tokens and
      * refresh them if necessary.
-     *
+     * 
      * This is used by AeroGear if tokens expired while a reference to the
      * module is still held by a pipe.
-     *
+     * 
      * @return true if access to the system is in a good state.
      */
     public boolean refreshAccess();
@@ -79,14 +79,14 @@ public interface AuthzModule extends PipeModule {
      * security applied to their {@link HttpProvider}. The headers/data/query
      * parameters returned should be applied to the Url and HttpProvider
      * directly before a call.
-     *
+     * 
      * @param requestUri the Request-Line URI.
      * @param method the HTTP method being used
      * @param requestBody the body of the request. This method promises to not
-     * modify the body.
-     *
+     *            modify the body.
+     * 
      * @return the current AuthorizationFields for security
-     *
+     * 
      */
     public AuthorizationFields getAuthorizationFields(URI requestUri, String method, byte[] requestBody);
 

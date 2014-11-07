@@ -112,18 +112,25 @@ public class OAuth2AuthzSession implements Parcelable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || ((Object) this).getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || ((Object) this).getClass() != o.getClass())
+            return false;
 
         OAuth2AuthzSession that = (OAuth2AuthzSession) o;
 
-        if (expires_on != that.expires_on) return false;
-        if (accessToken != null ? !accessToken.equals(that.accessToken) : that.accessToken != null) return false;
-        if (accountId != null ? !accountId.equals(that.accountId) : that.accountId != null) return false;
+        if (expires_on != that.expires_on)
+            return false;
+        if (accessToken != null ? !accessToken.equals(that.accessToken) : that.accessToken != null)
+            return false;
+        if (accountId != null ? !accountId.equals(that.accountId) : that.accountId != null)
+            return false;
         if (authorizationCode != null ? !authorizationCode.equals(that.authorizationCode) : that.authorizationCode != null)
             return false;
-        if (clientId != null ? !clientId.equals(that.clientId) : that.clientId != null) return false;
-        if (refreshToken != null ? !refreshToken.equals(that.refreshToken) : that.refreshToken != null) return false;
+        if (clientId != null ? !clientId.equals(that.clientId) : that.clientId != null)
+            return false;
+        if (refreshToken != null ? !refreshToken.equals(that.refreshToken) : that.refreshToken != null)
+            return false;
 
         return true;
     }
@@ -141,8 +148,9 @@ public class OAuth2AuthzSession implements Parcelable {
 
     @Override
     public String toString() {
-        return "AuthzSession{" + "cliendId=" + clientId + ", accessToken=" + accessToken + ", authorizationCode=" + authorizationCode + ", refreshToken=" + refreshToken
-                + ", accountId=" + accountId + ", expires_on=" + expires_on + '}';
+        return "AuthzSession {" + "cliendId=" + clientId + ", accessToken=" + accessToken
+                + ", authorizationCode=" + authorizationCode + ", refreshToken=" + refreshToken
+                + ", accountId=" + accountId + ", expires_on=" + expires_on + "}";
     }
 
     @Override
