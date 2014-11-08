@@ -1,26 +1,28 @@
 /**
- * JBoss, Home of Professional Open Source
- * Copyright Red Hat, Inc., and individual contributors.
+ * JBoss, Home of Professional Open Source Copyright Red Hat, Inc., and
+ * individual contributors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 package org.jboss.aerogear.android.impl.authz.oauth2;
 
 import com.google.gson.JsonObject;
+import java.net.HttpURLConnection;
 import org.jboss.aerogear.android.authorization.test.MainActivity;
 import org.jboss.aerogear.android.datamanager.Store;
 import org.jboss.aerogear.android.http.HeaderAndBody;
 import org.jboss.aerogear.android.http.HttpProvider;
+import org.jboss.aerogear.android.http.HttpException;
 import org.jboss.aerogear.android.impl.datamanager.SQLStore;
 import org.jboss.aerogear.android.impl.helper.UnitTestUtils;
 import org.jboss.aerogear.android.impl.util.PatchedActivityInstrumentationTestCase;
@@ -86,8 +88,34 @@ public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<Mai
         assertEquals("testToken", service.fetchAccessToken("testAccountId", new OAuth2Properties(null, null)));
     }
 
-    public void testExchangeToken() {
+    public void testErrorJsonMessage() {
+        account.setExpires_on(hourAgo());
+        when(mockStore.read(eq("testAccountId"))).thenReturn(account);
 
+        when(mockProvider.post((byte[]) any())).thenThrow(new HttpException("{\"error\":{\"message\":\"this is a message\"}}".getBytes(), HttpURLConnection.HTTP_BAD_REQUEST));
+        try {
+            service.fetchAccessToken("testAccountId", new OAuth2Properties(baseUrl, null));
+        } catch (OAuth2AuthorizationException exception) {
+            assertEquals("{\"message\":\"this is a message\"}", exception.error);
+            return;
+        }
+        fail("Exception not thrown");
+        
+    }
+
+    public void testErrorStringMessage() {
+        account.setExpires_on(hourAgo());
+        when(mockStore.read(eq("testAccountId"))).thenReturn(account);
+
+        when(mockProvider.post((byte[]) any())).thenThrow(new HttpException("{\"error\":\"this is a message\"}".getBytes(), HttpURLConnection.HTTP_BAD_REQUEST));
+        try {
+            service.fetchAccessToken("testAccountId", new OAuth2Properties(baseUrl, null));
+        } catch (OAuth2AuthorizationException exception) {
+            assertEquals("this is a message", exception.error);
+            return;
+        }
+        fail("Exception not thrown");
+        
     }
 
     public void testRefreshToken() throws OAuth2AuthorizationException {

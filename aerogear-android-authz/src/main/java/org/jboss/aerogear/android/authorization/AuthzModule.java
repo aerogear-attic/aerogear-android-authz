@@ -75,6 +75,12 @@ public interface AuthzModule extends PipeModule {
     public boolean refreshAccess();
 
     /**
+     * This will remove all information about the account with the Module's 
+     * AccountId
+     */
+    public void deleteAccount();
+    
+    /**
      * This method is called be {@link Pipe} implementations when they need
      * security applied to their {@link HttpProvider}. The headers/data/query
      * parameters returned should be applied to the Url and HttpProvider

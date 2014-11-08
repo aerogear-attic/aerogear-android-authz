@@ -198,6 +198,11 @@ public class OAuth2AuthzModule implements AuthzModule {
         }
     }
 
+    @Override
+    public void deleteAccount() {
+        service.removeAccount(accountId);
+    }
+
     private class OAuth2AccessCallback implements Callback<String> {
 
         private final Activity callingActivity;
@@ -215,7 +220,9 @@ public class OAuth2AuthzModule implements AuthzModule {
         @Override
         public void onSuccess(final String accessToken) {
             account = service.getAccount(accountId);
-            callingActivity.unbindService(serviceConnection);
+            try {
+                callingActivity.unbindService(serviceConnection);
+            } catch (IllegalArgumentException ignore) {}
             myHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -229,7 +236,9 @@ public class OAuth2AuthzModule implements AuthzModule {
             myHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    callingActivity.unbindService(serviceConnection);
+                    try {
+                        callingActivity.unbindService(serviceConnection);
+                    } catch (IllegalArgumentException ignore) {}
                     originalCallback.onFailure(e);
                 }
             });
@@ -267,7 +276,9 @@ public class OAuth2AuthzModule implements AuthzModule {
             myHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    callingActivity.unbindService(serviceConnection);
+                    try {
+                        callingActivity.unbindService(serviceConnection);
+                    } catch (IllegalArgumentException ignore) {}
                     originalCallback.onFailure(e);
                 }
             });
