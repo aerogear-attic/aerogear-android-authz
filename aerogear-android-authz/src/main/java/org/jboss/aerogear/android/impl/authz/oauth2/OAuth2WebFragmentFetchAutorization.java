@@ -19,7 +19,6 @@ package org.jboss.aerogear.android.impl.authz.oauth2;
 import android.app.Activity;
 import android.net.Uri;
 import android.util.Pair;
-import com.google.common.base.Charsets;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -62,7 +61,7 @@ public class OAuth2WebFragmentFetchAutorization {
         String append = "";
         for (String scope : scopes) {
             scopeValue.append(append);
-            scopeValue.append(URLEncoder.encode(scope, Charsets.UTF_8.name()));
+            scopeValue.append(URLEncoder.encode(scope, "UTF-8"));
             append = "+";
         }
 
@@ -79,13 +78,13 @@ public class OAuth2WebFragmentFetchAutorization {
 
         String query = "?scope=%s&redirect_uri=%s&client_id=%s&state=%s&response_type=code";
         query = String.format(query, formatScopes(scopes),
-                URLEncoder.encode(redirectURL.toString(), Charsets.UTF_8.name()),
+                URLEncoder.encode(redirectURL.toString(), "UTF-8"),
                 clientId, state);
 
         if (config.getAdditionalAuthorizationParams() != null
                 && config.getAdditionalAuthorizationParams().size() > 0) {
             for (Pair<String, String> param : config.getAdditionalAuthorizationParams()) {
-                query += String.format("&%s=%s", URLEncoder.encode(param.first, Charsets.UTF_8.name()), URLEncoder.encode(param.second, Charsets.UTF_8.name()));
+                query += String.format("&%s=%s", URLEncoder.encode(param.first, "UTF-8"), URLEncoder.encode(param.second, "UTF-8"));
             }
         }
 
