@@ -24,10 +24,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 import android.util.Pair;
-import com.google.common.base.Function;
-import com.google.common.base.Strings;
-import com.google.common.collect.Collections2;
-import com.google.common.net.HttpHeaders;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -85,13 +82,13 @@ public class OAuth2AuthzService extends Service {
             return null;
         }
 
-        if (!Strings.isNullOrEmpty(storedAccount.getAccessToken()) && storedAccount.tokenIsNotExpired()) {
+        if (!isNullOrEmpty(storedAccount.getAccessToken()) && storedAccount.tokenIsNotExpired()) {
             return storedAccount.getAccessToken();
-        } else if (!Strings.isNullOrEmpty(storedAccount.getRefreshToken())) {
+        } else if (!isNullOrEmpty(storedAccount.getRefreshToken())) {
             refreshAccount(storedAccount, config);
             sessionStore.save(storedAccount);
             return storedAccount.getAccessToken();
-        } else if (!Strings.isNullOrEmpty(storedAccount.getAuthorizationCode())) {
+        } else if (!isNullOrEmpty(storedAccount.getAuthorizationCode())) {
             exchangeAuthorizationCodeForAccessToken(storedAccount, config);
             sessionStore.save(storedAccount);
             return storedAccount.getAccessToken();
@@ -128,8 +125,8 @@ public class OAuth2AuthzService extends Service {
         if (storedAccount == null) {
             return false;
         }
-        return !Strings.isNullOrEmpty(storedAccount.getAuthorizationCode())
-                || !Strings.isNullOrEmpty(storedAccount.getAccessToken());
+        return !isNullOrEmpty(storedAccount.getAuthorizationCode())
+                || !isNullOrEmpty(storedAccount.getAccessToken());
     }
 
     /**
@@ -148,13 +145,15 @@ public class OAuth2AuthzService extends Service {
      * @return all OAuth2AuthzSession's in the system
      */
     public List<String> getAccounts() {
-        return new ArrayList<String>(Collections2.<OAuth2AuthzSession, String> transform(sessionStore.readAll(), new Function<OAuth2AuthzSession, String>() {
-
-            @Override
-            public String apply(OAuth2AuthzSession input) {
-                return input.getAccountId();
-            }
-        }));
+        Collection<OAuth2AuthzSession> sessions = sessionStore.readAll();
+        ArrayList<String> accountIds = new ArrayList<String>();
+        
+        for (OAuth2AuthzSession session : sessions) {
+            accountIds.add(session.getAccountId());
+        }
+        
+        return accountIds;
+        
     }
 
     @Override
@@ -239,7 +238,7 @@ public class OAuth2AuthzService extends Service {
 
             final HttpProvider provider = getHttpProvider(endpoint);
             final String formTemplate = "%s=%s";
-            provider.setDefaultHeader(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded");
+            provider.setDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
 
             final StringBuilder bodyBuilder = new StringBuilder();
 
@@ -299,7 +298,7 @@ public class OAuth2AuthzService extends Service {
 
                 if (jsonResponseObject.has("refresh_token")) {
                     String refreshToken = jsonResponseObject.get("refresh_token").getAsString();
-                    if (!Strings.isNullOrEmpty(refreshToken)) {
+                    if (!isNullOrEmpty(refreshToken)) {
                         storedAccount.setRefreshToken(refreshToken);
                     }
                 }
@@ -318,7 +317,7 @@ public class OAuth2AuthzService extends Service {
                             Long expires_on = new Date().getTime() + expiresIn * 1000;
                             storedAccount.setExpires_on(expires_on);
                         } else if ("refresh_token".equals(key)) {
-                            if (!Strings.isNullOrEmpty(value)) {
+                            if (!isNullOrEmpty(value)) {
                                 storedAccount.setRefreshToken(value);
                             }
                         }
@@ -356,6 +355,10 @@ public class OAuth2AuthzService extends Service {
      */
     public void removeAccount(String accountId) {
         sessionStore.remove(accountId);
+    }
+
+    private boolean isNullOrEmpty(String value) {
+        return (value == null || value.isEmpty());
     }
 
     public static class AuthzBinder extends Binder {

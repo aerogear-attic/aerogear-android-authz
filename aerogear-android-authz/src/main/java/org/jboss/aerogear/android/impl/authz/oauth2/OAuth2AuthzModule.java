@@ -26,7 +26,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
-import com.google.common.base.Strings;
 
 import java.net.URI;
 import java.util.UUID;
@@ -75,7 +74,7 @@ public class OAuth2AuthzModule implements AuthzModule {
             return false;
         }
 
-        return account.tokenIsNotExpired() && !Strings.isNullOrEmpty(account.getAccessToken());
+        return account.tokenIsNotExpired() && !isNullOrEmpty(account.getAccessToken());
     }
 
     public boolean hasCredentials() {
@@ -84,7 +83,7 @@ public class OAuth2AuthzModule implements AuthzModule {
             return false;
         }
 
-        return !Strings.isNullOrEmpty(account.getAccessToken());
+        return !isNullOrEmpty(account.getAccessToken());
     }
 
     @Override
@@ -121,7 +120,7 @@ public class OAuth2AuthzModule implements AuthzModule {
 
         service = instance.getService();
 
-        if (Strings.isNullOrEmpty(accountId)) {
+        if (isNullOrEmpty(accountId)) {
             throw new IllegalArgumentException("need to have accountId set");
         }
 
@@ -168,7 +167,7 @@ public class OAuth2AuthzModule implements AuthzModule {
      *         OAuth2AuthzService
      */
     private boolean hasAccount() {
-        return (!Strings.isNullOrEmpty(accountId) && service.hasAccount(accountId));
+        return (!isNullOrEmpty(accountId) && service.hasAccount(accountId));
     }
 
     @Override
@@ -201,6 +200,10 @@ public class OAuth2AuthzModule implements AuthzModule {
     @Override
     public void deleteAccount() {
         service.removeAccount(accountId);
+    }
+
+    private boolean isNullOrEmpty(String testString) {
+        return testString == null || testString.isEmpty();
     }
 
     private class OAuth2AccessCallback implements Callback<String> {
