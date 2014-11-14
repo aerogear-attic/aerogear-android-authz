@@ -4,6 +4,9 @@
 
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="21"/>
 
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
         android:targetPackage="org.jboss.aerogear.android.authorization.test" />
