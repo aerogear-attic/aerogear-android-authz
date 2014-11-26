@@ -18,10 +18,8 @@ package org.jboss.aerogear.android.impl.authz.oauth2;
 
 import android.util.Pair;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 import org.jboss.aerogear.android.Config;
 import org.jboss.aerogear.android.authorization.AuthzModule;
 import org.jboss.aerogear.android.impl.authz.AuthorizationConfiguration;
@@ -37,8 +35,8 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     private String clientId = "";
     private String clientSecret = "";
     private String accountId = "";
-    private Set<Pair<String, String>> additionalAuthorizationParams = new HashSet<Pair<String, String>>();
-    private Set<Pair<String, String>> additionalAccessParams = new HashSet<Pair<String, String>>();
+    private final Set<Pair<String, String>> additionalAuthorizationParams = new HashSet<Pair<String, String>>();
+    private final Set<Pair<String, String>> additionalAccessParams = new HashSet<Pair<String, String>>();
 
     /**
      * The authzEnpoint defines the endpoint which the Authorization module will
@@ -203,18 +201,18 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
      * @return the current set of authorization parameters.
      */
     public Set<Pair<String, String>> getAdditionalAuthorizationParams() {
-        return additionalAuthorizationParams;
+        return Collections.unmodifiableSet(additionalAuthorizationParams);
     }
 
     /**
      * Sometimes a implementation will need additional parameters when
      * authorization is performed.
      * 
-     * @param additionalAuthorizationParams a new value for additionalAuthorizationParams
+     * @param additionalAuthorizationParam add a new Pair of AuthorizationParams
      * @return the current configuration
      */
-    public OAuth2AuthorizationConfiguration setAdditionalAuthorizationParams(Set<Pair<String, String>> additionalAuthorizationParams) {
-        this.additionalAuthorizationParams = additionalAuthorizationParams;
+    public OAuth2AuthorizationConfiguration addAdditionalAuthorizationParam(Pair<String, String> additionalAuthorizationParam) {
+        this.additionalAuthorizationParams.add(additionalAuthorizationParam);
         return this;
     }
 
@@ -224,17 +222,17 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
      * @return the current set of authorization parameters.
      */
     public Set<Pair<String, String>> getAdditionalAccessParams() {
-        return additionalAccessParams;
+        return Collections.unmodifiableSet(additionalAccessParams);
     }
 
     /**
      * Sometimes a implementation will need additional parameters when access is performed.
      * 
-     * @param additionalAccessParams a new value for additionalAccessParams
+     * @param additionalAccessParam add a new Pair of AccessParams
      * @return the current configuration
      */
-    public OAuth2AuthorizationConfiguration setAdditionalAccessParams(Set<Pair<String, String>> additionalAccessParams) {
-        this.additionalAccessParams = additionalAccessParams;
+    public OAuth2AuthorizationConfiguration addAdditionalAccessParam(Pair<String, String> additionalAccessParam) {
+        this.additionalAccessParams.add(additionalAccessParam);
         return this;
     }
 
