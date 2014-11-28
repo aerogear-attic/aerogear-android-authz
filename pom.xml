@@ -33,7 +33,6 @@
 
     <modules>
         <module>aerogear-android-authz</module>
-        <module>aerogear-android-authz-test</module>
     </modules>
 
     <scm>
@@ -111,6 +110,20 @@
             </plugins>
         </pluginManagement>
     </build>
+    <profiles>
+        <profile>
+            <id>android-tests</id>
+            <activation>
+                <property>
+                    <name>!release</name>
+                </property>
+            </activation>
+            <modules>
+                <module>aerogear-android-authz-test</module>
+            </modules>
+        </profile>
+    </profiles>
+
 
 </project>
 
