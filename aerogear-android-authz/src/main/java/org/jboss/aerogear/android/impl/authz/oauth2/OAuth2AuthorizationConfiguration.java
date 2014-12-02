@@ -18,7 +18,11 @@ package org.jboss.aerogear.android.impl.authz.oauth2;
 
 import android.util.Pair;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Collections;
 
 import org.jboss.aerogear.android.Config;
 import org.jboss.aerogear.android.authorization.AuthzModule;
