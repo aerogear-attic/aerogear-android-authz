@@ -221,6 +221,17 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     }
 
     /**
+     * Remove an additional authorization param
+     *
+     * @param additionalAuthorizationParam Authorization param to be removed
+     * @return the current configuration
+     */
+    public OAuth2AuthorizationConfiguration removeAdditionalAuthorizationParam(Pair<String, String> additionalAuthorizationParam) {
+        this.additionalAuthorizationParams.remove(additionalAuthorizationParam);
+        return this;
+    }
+
+    /**
      * Sometimes a implementation will need additional parameters when access is performed.
      * 
      * @return the current set of authorization parameters.
@@ -237,6 +248,17 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
      */
     public OAuth2AuthorizationConfiguration addAdditionalAccessParam(Pair<String, String> additionalAccessParam) {
         this.additionalAccessParams.add(additionalAccessParam);
+        return this;
+    }
+
+    /**
+     * Remove an additional access param
+     *
+     * @param additionalAccessParam Access param to be removed
+     * @return the current configuration
+     */
+    public OAuth2AuthorizationConfiguration removeAdditionalAccessParam(Pair<String, String> additionalAccessParam) {
+        this.additionalAccessParams.remove(additionalAccessParam);
         return this;
     }
 
