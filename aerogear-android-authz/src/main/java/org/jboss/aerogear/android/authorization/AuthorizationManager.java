@@ -14,14 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.authz;
+package org.jboss.aerogear.android.authorization;
 
-import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthroizationConfigurationProvider;
-import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthorizationConfiguration;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthroizationConfigurationProvider;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthorizationConfiguration;
 import java.util.HashMap;
 import java.util.Map;
-import org.jboss.aerogear.android.ConfigurationProvider;
-import org.jboss.aerogear.android.authorization.AuthzModule;
+import org.jboss.aerogear.android.core.ConfigurationProvider;
 
 public final class AuthorizationManager {
     private static Map<String, AuthzModule> modules = new HashMap<String, AuthzModule>();

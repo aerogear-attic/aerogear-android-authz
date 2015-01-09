@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.authz.oauth2;
+package org.jboss.aerogear.android.authorization.oauth2;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -24,8 +24,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import org.jboss.aerogear.android.Callback;
-import static org.jboss.aerogear.android.impl.util.UrlUtils.appendToBaseURL;
+import org.jboss.aerogear.android.core.Callback;
+import static org.jboss.aerogear.android.pipe.util.UrlUtils.appendToBaseURL;
 
 /**
  * This class displays a WebView Dialog Fragment to facilitates exchanging

@@ -14,15 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.authz.oauth2;
+package org.jboss.aerogear.android.authorization.test.util;
 
-import org.jboss.aerogear.android.ConfigurationProvider;
+import android.app.Activity;
+import android.os.Bundle;
 
-public class OAuth2AuthroizationConfigurationProvider implements ConfigurationProvider<OAuth2AuthorizationConfiguration> {
+public class StubActivity extends Activity {
 
     @Override
-    public OAuth2AuthorizationConfiguration newConfiguration() {
-        return new OAuth2AuthorizationConfiguration();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
 }

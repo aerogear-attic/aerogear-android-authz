@@ -18,11 +18,11 @@ package org.jboss.aerogear.android.authorization;
 
 import android.app.Activity;
 import java.net.URI;
-import org.jboss.aerogear.android.Callback;
-import org.jboss.aerogear.android.authentication.AuthorizationFields;
-import org.jboss.aerogear.android.code.PipeModule;
-import org.jboss.aerogear.android.http.HttpProvider;
-import org.jboss.aerogear.android.pipeline.Pipe;
+import org.jboss.aerogear.android.core.Callback;
+import org.jboss.aerogear.android.pipe.module.AuthorizationFields;
+import org.jboss.aerogear.android.pipe.module.PipeModule;
+import org.jboss.aerogear.android.pipe.http.HttpProvider;
+import org.jboss.aerogear.android.pipe.Pipe;
 
 /**
  * The AuthzModule wraps access to Authorization providers and exposes

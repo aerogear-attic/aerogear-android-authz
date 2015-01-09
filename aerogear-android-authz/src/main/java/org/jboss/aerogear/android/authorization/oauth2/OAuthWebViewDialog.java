@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.authz.oauth2;
+package org.jboss.aerogear.android.authorization.oauth2;
 
 import android.app.DialogFragment;
 import android.content.DialogInterface;

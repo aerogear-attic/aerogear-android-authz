@@ -14,13 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.helper;
+package org.jboss.aerogear.android.authorization.test.helper;
 
-import org.jboss.aerogear.android.RecordId;
-
-public class DataWithNoPropertyId {
-
-    @RecordId
-    private Integer id;
-
+public class DataWithNoIdConfigured {
 }

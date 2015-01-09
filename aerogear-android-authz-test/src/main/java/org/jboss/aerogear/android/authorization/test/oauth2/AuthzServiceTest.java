@@ -14,18 +14,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.jboss.aerogear.android.impl.authz.oauth2;
+package org.jboss.aerogear.android.authorization.test.oauth2;
 
 import com.google.gson.JsonObject;
 import java.net.HttpURLConnection;
+
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthorizationException;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzService;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzSession;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2Properties;
 import org.jboss.aerogear.android.authorization.test.MainActivity;
-import org.jboss.aerogear.android.datamanager.Store;
-import org.jboss.aerogear.android.http.HeaderAndBody;
-import org.jboss.aerogear.android.http.HttpProvider;
-import org.jboss.aerogear.android.http.HttpException;
-import org.jboss.aerogear.android.impl.datamanager.SQLStore;
-import org.jboss.aerogear.android.impl.helper.UnitTestUtils;
-import org.jboss.aerogear.android.impl.util.PatchedActivityInstrumentationTestCase;
+import org.jboss.aerogear.android.store.Store;
+import org.jboss.aerogear.android.pipe.http.HeaderAndBody;
+import org.jboss.aerogear.android.pipe.http.HttpProvider;
+import org.jboss.aerogear.android.pipe.http.HttpException;
+import org.jboss.aerogear.android.store.sql.SQLStore;
+import org.jboss.aerogear.android.authorization.test.util.PatchedActivityInstrumentationTestCase;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -64,7 +68,7 @@ public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<Mai
             }
 
         };
-        UnitTestUtils.setPrivateField(service, "sessionStore", mockStore);
+        MainActivity.UnitTestUtils.setPrivateField(service, "sessionStore", mockStore);
 
         account = new OAuth2AuthzSession();
         account.setAccessToken("testToken");

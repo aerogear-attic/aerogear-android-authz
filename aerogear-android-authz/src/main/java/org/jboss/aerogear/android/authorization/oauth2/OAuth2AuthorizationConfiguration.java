@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.authz.oauth2;
+package org.jboss.aerogear.android.authorization.oauth2;
 
 import android.util.Pair;
 import java.net.URL;
@@ -24,9 +24,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.Collections;
 
-import org.jboss.aerogear.android.Config;
+import org.jboss.aerogear.android.core.Config;
 import org.jboss.aerogear.android.authorization.AuthzModule;
-import org.jboss.aerogear.android.impl.authz.AuthorizationConfiguration;
+import org.jboss.aerogear.android.authorization.AuthorizationConfiguration;
 
 public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration<OAuth2AuthorizationConfiguration> implements Config<OAuth2AuthorizationConfiguration> {
 

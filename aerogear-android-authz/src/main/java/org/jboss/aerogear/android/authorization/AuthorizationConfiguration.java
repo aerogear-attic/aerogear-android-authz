@@ -14,12 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.authz;
+package org.jboss.aerogear.android.authorization;
 
 import java.util.Collection;
 import java.util.HashSet;
-import org.jboss.aerogear.android.Config;
-import org.jboss.aerogear.android.authorization.AuthzModule;
+import org.jboss.aerogear.android.core.Config;
 
 public abstract class AuthorizationConfiguration<CONFIGURATION extends AuthorizationConfiguration> implements Config<CONFIGURATION> {
 

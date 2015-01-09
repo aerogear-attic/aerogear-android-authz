@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.helper;
+package org.jboss.aerogear.android.authorization.test.helper;
 
 import org.mockito.ArgumentMatcher;
 import org.mockito.internal.matchers.VarargMatcher;

@@ -14,7 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.helper;
+package org.jboss.aerogear.android.authorization;
 
-public class DataWithNoIdConfigured {
+public interface OnAuthorizationCreatedListener {
+    abstract void onAuthorizationCreated(AuthorizationConfiguration<?> configuration, AuthzModule auth);
+
 }

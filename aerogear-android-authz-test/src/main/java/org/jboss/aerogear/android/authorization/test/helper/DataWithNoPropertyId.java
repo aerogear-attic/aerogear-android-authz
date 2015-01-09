@@ -14,11 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.authz;
+package org.jboss.aerogear.android.authorization.test.helper;
 
-import org.jboss.aerogear.android.authorization.AuthzModule;
+import org.jboss.aerogear.android.core.RecordId;
 
-public interface OnAuthorizationCreatedListener {
-    abstract void onAuthorizationCreated(AuthorizationConfiguration<?> configuration, AuthzModule auth);
+public class DataWithNoPropertyId {
+
+    @RecordId
+    private Integer id;
 
 }

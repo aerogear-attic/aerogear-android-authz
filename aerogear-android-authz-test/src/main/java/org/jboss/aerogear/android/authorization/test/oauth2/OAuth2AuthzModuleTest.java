@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.authorization;
+package org.jboss.aerogear.android.authorization.test.oauth2;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,17 +23,16 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.jboss.aerogear.android.Callback;
+import org.jboss.aerogear.android.core.Callback;
+import org.jboss.aerogear.android.authorization.AuthorizationManager;
 import org.jboss.aerogear.android.authorization.test.MainActivity;
-import org.jboss.aerogear.android.impl.authz.AuthorizationManager;
-import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthorizationConfiguration;
-import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzService;
-import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthorizationException;
-import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzModule;
-import org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzSession;
-import org.jboss.aerogear.android.impl.helper.UnitTestUtils;
-import org.jboss.aerogear.android.impl.util.PatchedActivityInstrumentationTestCase;
-import org.jboss.aerogear.android.impl.util.VoidCallback;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthorizationConfiguration;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzService;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthorizationException;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzModule;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzSession;
+import org.jboss.aerogear.android.authorization.test.util.PatchedActivityInstrumentationTestCase;
+import org.jboss.aerogear.android.authorization.test.util.VoidCallback;
 import org.mockito.ArgumentCaptor;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -104,7 +103,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         OAuth2AuthzSession account = new OAuth2AuthzSession();
         account.setAccessToken("testToken");
 
-        UnitTestUtils.setPrivateField(module, "account", account);
+        MainActivity.UnitTestUtils.setPrivateField(module, "account", account);
 
         assertEquals("Bearer testToken", module.getAuthorizationFields(null, null, null).getHeaders().get(0).second);
         assertEquals("Authorization", module.getAuthorizationFields(null, null, null).getHeaders().get(0).first);
@@ -124,13 +123,13 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         config.setBaseURL(BASE_URL);
 
         OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
-        Class<?> callbackClass = Class.forName("org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzModule$OAuth2AuthorizationCallback");
+        Class<?> callbackClass = Class.forName("org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzModule$OAuth2AuthorizationCallback");
         Constructor<?> constructor = callbackClass.getDeclaredConstructor(OAuth2AuthzModule.class, Activity.class, Callback.class, ServiceConnection.class);
         constructor.setAccessible(true);
 
         Callback callback = (Callback) constructor.newInstance(module, mockActivity, new VoidCallback(), mockServiceConnection);
 
-        UnitTestUtils.setPrivateField(module, "service", mockService);
+        MainActivity.UnitTestUtils.setPrivateField(module, "service", mockService);
 
         callback.onSuccess("testCode");
 
@@ -154,17 +153,17 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         config.setBaseURL(BASE_URL);
 
         OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
-        Class<?> callbackClass = Class.forName("org.jboss.aerogear.android.impl.authz.oauth2.OAuth2AuthzModule$OAuth2AccessCallback");
+        Class<?> callbackClass = Class.forName("org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzModule$OAuth2AccessCallback");
         Constructor<?> constructor = callbackClass.getDeclaredConstructor(OAuth2AuthzModule.class, Activity.class, Callback.class, ServiceConnection.class);
         constructor.setAccessible(true);
 
         Callback callback = (Callback) constructor.newInstance(module, mockActivity, new VoidCallback(), mockServiceConnection);
 
-        UnitTestUtils.setPrivateField(module, "service", mockService);
+        MainActivity.UnitTestUtils.setPrivateField(module, "service", mockService);
 
         callback.onSuccess("testToken");
 
         Mockito.verify(mockActivity, times(1)).unbindService(eq(mockServiceConnection));
-        assertEquals("testToken", UnitTestUtils.getPrivateField(module, "account", OAuth2AuthzSession.class).getAccessToken());
+        assertEquals("testToken", MainActivity.UnitTestUtils.getPrivateField(module, "account", OAuth2AuthzSession.class).getAccessToken());
     }
 }

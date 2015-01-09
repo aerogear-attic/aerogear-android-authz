@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.authz.oauth2;
+package org.jboss.aerogear.android.authorization.oauth2;
 
 import android.app.Service;
 import android.content.ComponentName;
@@ -29,14 +29,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import org.jboss.aerogear.android.DataManager;
-import org.jboss.aerogear.android.datamanager.IdGenerator;
-import org.jboss.aerogear.android.http.HeaderAndBody;
-import org.jboss.aerogear.android.http.HttpException;
-import org.jboss.aerogear.android.http.HttpProvider;
-import org.jboss.aerogear.android.impl.datamanager.SQLStore;
-import org.jboss.aerogear.android.impl.datamanager.SQLStoreConfiguration;
-import org.jboss.aerogear.android.impl.http.HttpRestProvider;
+import org.jboss.aerogear.android.store.DataManager;
+import org.jboss.aerogear.android.store.generator.IdGenerator;
+import org.jboss.aerogear.android.pipe.http.HeaderAndBody;
+import org.jboss.aerogear.android.pipe.http.HttpException;
+import org.jboss.aerogear.android.pipe.http.HttpProvider;
+import org.jboss.aerogear.android.store.sql.SQLStore;
+import org.jboss.aerogear.android.store.sql.SQLStoreConfiguration;
+import org.jboss.aerogear.android.pipe.http.HttpRestProvider;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -45,7 +45,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
 
-import static org.jboss.aerogear.android.impl.util.UrlUtils.appendToBaseURL;
+import static org.jboss.aerogear.android.pipe.util.UrlUtils.appendToBaseURL;
 
 /**
  * This service manages tokens for Authorization sessions. It can also perform

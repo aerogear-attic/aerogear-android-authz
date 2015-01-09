@@ -19,12 +19,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.jboss.aerogear.android.impl.authz.oauth2;
+package org.jboss.aerogear.android.authorization.oauth2;
 
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
-import org.jboss.aerogear.android.Callback;
+import org.jboss.aerogear.android.core.Callback;
 
 /**
  * This is a helper class which fetches an access token given an authorization

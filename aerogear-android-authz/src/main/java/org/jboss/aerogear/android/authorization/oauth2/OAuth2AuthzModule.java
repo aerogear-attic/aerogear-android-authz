@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.impl.authz.oauth2;
+package org.jboss.aerogear.android.authorization.oauth2;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -31,11 +31,11 @@ import java.net.URI;
 import java.util.UUID;
 import org.apache.http.HttpStatus;
 
-import org.jboss.aerogear.android.Callback;
-import org.jboss.aerogear.android.authentication.AuthorizationFields;
+import org.jboss.aerogear.android.core.Callback;
+import org.jboss.aerogear.android.pipe.module.AuthorizationFields;
 import org.jboss.aerogear.android.authorization.AuthzModule;
-import org.jboss.aerogear.android.code.ModuleFields;
-import org.jboss.aerogear.android.http.HttpException;
+import org.jboss.aerogear.android.pipe.module.ModuleFields;
+import org.jboss.aerogear.android.pipe.http.HttpException;
 
 /**
  * 
