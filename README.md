@@ -26,7 +26,7 @@ Add to your application's `build.gradle` file
 
 ```
 dependencies {
-  compile 'org.jboss.aerogear:aerogear-android-authz:2.0.0-SNAPSHOT@aar'
+  compile 'org.jboss.aerogear:aerogear-android-authz:2.0.0@aar'
 }
 ```
 
@@ -50,7 +50,7 @@ Include the following dependencies in your project's `pom.xml`
 <dependency>
   <groupId>org.jboss.aerogear</groupId>
   <artifactId>aerogear-android-authz</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>2.0.0</version>
   <scope>provided</scope>
   <type>jar</type>
 </dependency>
@@ -58,7 +58,7 @@ Include the following dependencies in your project's `pom.xml`
 <dependency>
   <groupId>org.jboss.aerogear</groupId>
   <artifactId>aerogear-android-authz</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>2.0.0</version>
   <type>apklib</type>
 </dependency>
 ```
