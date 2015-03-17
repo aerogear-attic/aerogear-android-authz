@@ -18,8 +18,10 @@ android:
     - sys-img-armeabi-v7a-android-19
 
 env:
-    matrix:
-      - ANDROID_SDK=android-21 ANDROID_EMULATOR=android-19 ANDROID_ABI=armeabi-v7a
+  global:
+    - RELEASE_VERSION=$(grep "<version>" pom.xml | tr "\n" ":" | cut -d ':' -f1 | sed s/\<version\>//g| sed s/\"//g| sed s/\<\\/version\>//g | tr -d ' ')
+  matrix:
+    - ANDROID_SDK=android-21 ANDROID_EMULATOR=android-19 ANDROID_ABI=armeabi-v7a
 
 before_install:
 
@@ -83,7 +85,7 @@ script:
   - ./android-wait-for-emulator
   - adb shell input keyevent 82
   - adb shell df
-  - adb install target/aerogear-android-authz-test-2.1.0-SNAPSHOT.apk
+  - adb install target/aerogear-android-authz-test-$RELEASE_VERSION.apk
   - mvn android:instrument
 
 
