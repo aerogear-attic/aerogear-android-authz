@@ -46,9 +46,9 @@
 
         <!-- Project depencies versions -->
         <aerogear.bom.version>0.2.10</aerogear.bom.version>
-        <aerogear.android.core.version>2.1.0-SNAPSHOT</aerogear.android.core.version>
-        <aerogear.android.store.version>2.1.0-SNAPSHOT</aerogear.android.store.version>
-        <aerogear.android.pipe.version>2.1.0-SNAPSHOT</aerogear.android.pipe.version>
+        <aerogear.android.core.version>2.2.0-SNAPSHOT</aerogear.android.core.version>
+        <aerogear.android.store.version>2.2.0-SNAPSHOT</aerogear.android.store.version>
+        <aerogear.android.pipe.version>2.2.0-SNAPSHOT</aerogear.android.pipe.version>
         <aerogear.crypto.version>0.1.3</aerogear.crypto.version>
 
         <!-- Plugins versions -->
