@@ -1,18 +1,18 @@
 /**
- * JBoss, Home of Professional Open Source
- * Copyright Red Hat, Inc., and individual contributors.
+ * JBoss, Home of Professional Open Source Copyright Red Hat, Inc., and
+ * individual contributors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 package org.jboss.aerogear.android.authorization.oauth2;
 
@@ -27,6 +27,7 @@ import java.util.Collections;
 import org.jboss.aerogear.android.core.Config;
 import org.jboss.aerogear.android.authorization.AuthzModule;
 import org.jboss.aerogear.android.authorization.AuthorizationConfiguration;
+import org.jboss.aerogear.android.authorization.oauth2.intent.OAuth2IntentAuthzModule;
 
 public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration<OAuth2AuthorizationConfiguration> implements Config<OAuth2AuthorizationConfiguration> {
 
@@ -39,13 +40,14 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     private String clientId = "";
     private String clientSecret = "";
     private String accountId = "";
+    private boolean withIntent = false;
     private final Set<Pair<String, String>> additionalAuthorizationParams = new HashSet<Pair<String, String>>();
     private final Set<Pair<String, String>> additionalAccessParams = new HashSet<Pair<String, String>>();
 
     /**
      * The authzEnpoint defines the endpoint which the Authorization module will
      * use to obtain an authorization token.
-     * 
+     *
      * @return the current authzEndpoint
      */
     public String getAuthzEndpoint() {
@@ -55,7 +57,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     /**
      * The authzEnpoint defines the endpoint which the Authorization module will
      * use to obtain an authorization token.
-     * 
+     *
      * @param authzEndpoint new authzEndpoint
      * @return the current configuration
      */
@@ -67,7 +69,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     /**
      * The redirect URL is the url which handles consuming a response from the
      * authorization server.
-     * 
+     *
      * @return the current redirectURL.
      */
     public String getRedirectURL() {
@@ -77,7 +79,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     /**
      * The redirect URL is the url which handles consuming a response from the
      * authorization server.
-     * 
+     *
      * @param redirectURL a new redirectURL
      * @return the current configuration.
      */
@@ -89,9 +91,9 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     /**
      * The accessTokenEndpoint is responsible for generating an accesstoken for
      * an authorized user.
-     * 
+     *
      * @return the current accessTokenEndpoint
-     * 
+     *
      */
     public String getAccessTokenEndpoint() {
         return accessTokenEndpoint;
@@ -100,10 +102,10 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     /**
      * The accessTokenEndpoint is responsible for generating an accesstoken for
      * an authorized user.
-     * 
+     *
      * @param accessTokenEndpoint a new accessTokenEndpoint
      * @return the current configuration
-     * 
+     *
      */
     public OAuth2AuthorizationConfiguration setAccessTokenEndpoint(String accessTokenEndpoint) {
         this.accessTokenEndpoint = accessTokenEndpoint;
@@ -111,10 +113,10 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     }
 
     /**
-     * 
+     *
      * Scopes are a list of permissions the application will request at
      * Authorization.
-     * 
+     *
      * @return a copy of the current list of scopes
      */
     public List<String> getScopes() {
@@ -122,10 +124,10 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     }
 
     /**
-     * 
+     *
      * Scopes are a list of permissions the application will request at
      * Authorization.
-     * 
+     *
      * @param scopes a new List of scopes
      * @return the current configuration
      */
@@ -137,7 +139,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     /**
      * The client ID is the ID assigned to the application by the service
      * provider.
-     * 
+     *
      * @return the current clientID
      */
     public String getClientId() {
@@ -147,7 +149,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     /**
      * The client ID is the ID assigned to the application by the service
      * provider.
-     * 
+     *
      * @param clientId a new clientId
      * @return the current configuration
      */
@@ -158,7 +160,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
 
     /**
      * The client secret is assigned to the application by the service provider.
-     * 
+     *
      * @return the current clientSecret
      */
     public String getClientSecret() {
@@ -167,7 +169,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
 
     /**
      * The client secret is assigned to the application by the service provider.
-     * 
+     *
      * @param clientSecret a new clientSecret
      * @return the current configuration
      */
@@ -177,9 +179,10 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     }
 
     /**
-     * The account ID parameter is to identify it ID of the {@link OAuth2AuthzSession} which will be used to store the information.
+     * The account ID parameter is to identify it ID of the
+     * {@link OAuth2AuthzSession} which will be used to store the information.
      * It is unique per app and generated by you, the developer.
-     * 
+     *
      * @return the current account
      */
     public String getAccountId() {
@@ -187,9 +190,10 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     }
 
     /**
-     * The account ID parameter is to identify it ID of the {@link OAuth2AuthzSession} which will be used to store the information.
+     * The account ID parameter is to identify it ID of the
+     * {@link OAuth2AuthzSession} which will be used to store the information.
      * It is unique per app and generated by you, the developer.
-     * 
+     *
      * @param accountId the new account ID
      * @return the current configuration
      */
@@ -201,7 +205,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     /**
      * Sometimes a implementation will need additional parameters when
      * authorization is performed.
-     * 
+     *
      * @return the current set of authorization parameters.
      */
     public Set<Pair<String, String>> getAdditionalAuthorizationParams() {
@@ -211,7 +215,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     /**
      * Sometimes a implementation will need additional parameters when
      * authorization is performed.
-     * 
+     *
      * @param additionalAuthorizationParam add a new Pair of AuthorizationParams
      * @return the current configuration
      */
@@ -232,8 +236,9 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     }
 
     /**
-     * Sometimes a implementation will need additional parameters when access is performed.
-     * 
+     * Sometimes a implementation will need additional parameters when access is
+     * performed.
+     *
      * @return the current set of authorization parameters.
      */
     public Set<Pair<String, String>> getAdditionalAccessParams() {
@@ -241,8 +246,9 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
     }
 
     /**
-     * Sometimes a implementation will need additional parameters when access is performed.
-     * 
+     * Sometimes a implementation will need additional parameters when access is
+     * performed.
+     *
      * @param additionalAccessParam add a new Pair of AccessParams
      * @return the current configuration
      */
@@ -280,12 +286,16 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
         params.getAdditionalAccessParams().addAll(additionalAccessParams);
         params.getAdditionalAuthorizationParams().addAll(additionalAuthorizationParams);
 
-        return new OAuth2AuthzModule(params);
+        if (withIntent) {
+            return new OAuth2IntentAuthzModule(params);
+        } else {
+            return new OAuth2AuthzModule(params);
+        }
     }
 
     /**
      * The baseURL is the url which endpoints will be appended to.
-     * 
+     *
      * @return the current baseURL
      */
     public URL getBaseURL() {
@@ -294,7 +304,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
 
     /**
      * The baseURL is the url which endpoints will be appended to.
-     * 
+     *
      * @param baseURL new baseURL
      * @return the current configuration.
      */
@@ -305,9 +315,9 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
 
     /**
      * The refresh endpoint is the path to the location of the refresh token.
-     * 
+     *
      * Defaults to an empty String.
-     * 
+     *
      * @return the current baseURL
      */
     public String getRefreshEndpoint() {
@@ -316,16 +326,40 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
 
     /**
      * The refresh endpoint is the path to the location of the refresh token.
-     * 
+     *
      * Defaults to an empty String.
-     * 
+     *
      * @param refreshEndpoint a new endpoint.
-     * 
+     *
      * @return the current configuration.
      */
     public OAuth2AuthorizationConfiguration setRefreshEndpoint(String refreshEndpoint) {
         this.refreshEndpoint = refreshEndpoint;
         return this;
+    }
+
+    /**
+     * WithIntent will cause the AuthzModule to fire a BROWSE intent with the
+     * OAuth2 data packaged inside of it.
+     *
+     * Defaults to false.
+     *
+     * @return the current withIntent setting.
+     */
+    public boolean getWithIntent() {
+        return withIntent;
+    }
+
+    /**
+     * WithIntent will cause the AuthzModule to fire a BROWSE intent with the
+     * OAuth2 data packaged inside of it.
+     *
+     * Defaults to false.
+     *
+     * @param withIntent whether to use an intent or not
+     */
+    public void setWithIntent(boolean withIntent) {
+        this.withIntent = withIntent;
     }
 
 }
