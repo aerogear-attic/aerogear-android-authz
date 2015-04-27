@@ -19,12 +19,19 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.IBinder;
+import android.util.Log;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.UUID;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzModule;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzService;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzSession;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2FetchAccess;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2Properties;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2Utils;
 import org.jboss.aerogear.android.core.Callback;
 
 /**
@@ -64,7 +71,41 @@ public class OAuth2IntentAuthzModule extends OAuth2AuthzModule {
         }
 
         if (!service.hasAccount(accountId)) {
-
+            try {
+                
+                if (activity.getIntent() == null ||  activity.getIntent().getData() == null) {
+                    URL authzURL = OAuth2Utils.buildAuthzURL(config, state);
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(authzURL.toString()));
+                    activity.unbindService(instance);
+                    activity.startActivity(intent);
+                } else {
+                    
+                    Uri data = activity.getIntent().getData();
+                    String code = data.getQueryParameter("code");
+                    
+                    if (code == null) {
+                        callback.onFailure(new IllegalStateException("nocode"));
+                        return;
+                    }
+                    
+                    OAuth2AuthzSession session = new OAuth2AuthzSession();
+                    session.setAuthorizationCode(code);
+                    session.setAccountId(accountId);
+                    session.setClientId(clientId);
+                    service.addAccount(session);
+                    
+                    OAuth2FetchAccess fetcher = new OAuth2FetchAccess(service);
+                    fetcher.fetchAccessCode(accountId, config, callback);        
+                }
+                
+            } catch (UnsupportedEncodingException ex) {
+                Log.e(TAG, ex.getMessage(), ex);
+                callback.onFailure(ex);
+            } catch (MalformedURLException ex) {
+                Log.e(TAG, ex.getMessage(), ex);
+                callback.onFailure(ex);
+            }
         } else {
 
             OAuth2FetchAccess fetcher = new OAuth2FetchAccess(service);
