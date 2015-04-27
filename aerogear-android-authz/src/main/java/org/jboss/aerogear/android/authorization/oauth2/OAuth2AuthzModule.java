@@ -17,18 +17,10 @@
 package org.jboss.aerogear.android.authorization.oauth2;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Looper;
 import android.util.Log;
 
 import java.net.URI;
-import java.util.UUID;
 import org.apache.http.HttpStatus;
 
 import org.jboss.aerogear.android.core.Callback;
@@ -44,31 +36,30 @@ import org.jboss.aerogear.android.pipe.http.HttpException;
  * Authorization is performed in a WebView and returned to the calling activity.
  * 
  */
-public class OAuth2AuthzModule implements AuthzModule {
+public abstract class OAuth2AuthzModule implements AuthzModule {
 
     private static final IntentFilter AUTHZ_FILTER;
 
-    private final String accountId;
-    private final String clientId;
-    private final OAuth2Properties config;
-    private OAuth2AuthzSession account;
-    private OAuth2AuthzService service;
+    protected final String accountId;
+    protected final String clientId;
+    protected final OAuth2Properties config;
+    protected OAuth2AuthzSession account;
+    protected OAuth2AuthzService service;
 
     static {
         AUTHZ_FILTER = new IntentFilter();
         AUTHZ_FILTER.addAction("org.jboss.aerogear.android.authz.RECEIVE_AUTHZ");
     }
-    private String TAG = OAuth2AuthzModule.class.getSimpleName();
+    public final String TAG = OAuth2AuthzModule.class.getSimpleName();
 
     public OAuth2AuthzModule(OAuth2Properties config) {
         this.clientId = config.getClientId();
         this.accountId = config.getAccountId();
         this.config = config;
-
     }
 
     @Override
-    public boolean isAuthorized() {
+    public final boolean isAuthorized() {
 
         if (account == null) {
             return false;
@@ -77,7 +68,8 @@ public class OAuth2AuthzModule implements AuthzModule {
         return account.tokenIsNotExpired() && !isNullOrEmpty(account.getAccessToken());
     }
 
-    public boolean hasCredentials() {
+    @Override
+    public final boolean hasCredentials() {
 
         if (account == null) {
             return false;
@@ -87,28 +79,10 @@ public class OAuth2AuthzModule implements AuthzModule {
     }
 
     @Override
-    public void requestAccess(final Activity activity, final Callback<String> callback) {
-
-        final String state = UUID.randomUUID().toString();
-
-        final OAuth2AuthzService.AGAuthzServiceConnection connection = new OAuth2AuthzService.AGAuthzServiceConnection() {
-
-            @Override
-            public void onServiceConnected(ComponentName className, IBinder iBinder) {
-                super.onServiceConnected(className, iBinder);
-                doRequestAccess(state, activity, callback, this);
-            }
-
-        };
-
-        activity.bindService(new Intent(activity.getApplicationContext(), OAuth2AuthzService.class
-                ), connection, Context.BIND_AUTO_CREATE
-                );
-
-    }
+    public abstract void requestAccess(final Activity activity, final Callback<String> callback);
 
     @Override
-    public AuthorizationFields getAuthorizationFields(URI requestUri, String method, byte[] requestBody) {
+    public final AuthorizationFields getAuthorizationFields(URI requestUri, String method, byte[] requestBody) {
         AuthorizationFields fields = new AuthorizationFields();
 
         fields.addHeader("Authorization", "Bearer " + account.getAccessToken());
@@ -116,30 +90,9 @@ public class OAuth2AuthzModule implements AuthzModule {
         return fields;
     }
 
-    private void doRequestAccess(final String state, final Activity activity, final Callback<String> callback, final OAuth2AuthzService.AGAuthzServiceConnection instance) {
-
-        service = instance.getService();
-
-        if (isNullOrEmpty(accountId)) {
-            throw new IllegalArgumentException("need to have accountId set");
-        }
-
-        if (!service.hasAccount(accountId)) {
-
-            OAuth2WebFragmentFetchAutorization authzFetch = new OAuth2WebFragmentFetchAutorization(activity, state);
-            authzFetch.performAuthorization(config, new OAuth2AuthorizationCallback(activity, callback, instance));
-
-        } else {
-
-            OAuth2FetchAccess fetcher = new OAuth2FetchAccess(service);
-            fetcher.fetchAccessCode(accountId, config, new OAuth2AccessCallback(activity, callback, instance));
-
-        }
-
-    }
 
     @Override
-    public boolean refreshAccess() {
+    public final boolean refreshAccess() {
 
         if (!hasAccount()) {
             return false;
@@ -166,12 +119,12 @@ public class OAuth2AuthzModule implements AuthzModule {
      * @return true if accountId has a value AND that value is stored in the
      *         OAuth2AuthzService
      */
-    private boolean hasAccount() {
+    protected boolean hasAccount() {
         return (!isNullOrEmpty(accountId) && service.hasAccount(accountId));
     }
 
     @Override
-    public ModuleFields loadModule(URI relativeURI, String httpMethod, byte[] requestBody) {
+    public final ModuleFields loadModule(URI relativeURI, String httpMethod, byte[] requestBody) {
         AuthorizationFields authzFields = getAuthorizationFields(relativeURI, httpMethod, requestBody);
         ModuleFields moduleFields = new ModuleFields();
         moduleFields.setHeaders(authzFields.getHeaders());
@@ -187,7 +140,7 @@ public class OAuth2AuthzModule implements AuthzModule {
      * @return true if the token was refreshed. False if the token could not be
      * refreshed or if the status wasn't of UNAUTHORIZED or FORBIDDEN.
      */
-    public boolean handleError(HttpException exception) {
+    public final boolean handleError(HttpException exception) {
 
         if (exception.getStatusCode() == HttpStatus.SC_UNAUTHORIZED
                 || exception.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
@@ -198,94 +151,21 @@ public class OAuth2AuthzModule implements AuthzModule {
     }
 
     @Override
-    public void deleteAccount() {
+    public final void deleteAccount() {
         service.removeAccount(accountId);
     }
 
-    private boolean isNullOrEmpty(String testString) {
+    protected boolean isNullOrEmpty(String testString) {
         return testString == null || testString.isEmpty();
     }
-
-    private class OAuth2AccessCallback implements Callback<String> {
-
-        private final Activity callingActivity;
-        private final Callback<String> originalCallback;
-        private final ServiceConnection serviceConnection;
-        private final Handler myHandler;
-
-        public OAuth2AccessCallback(Activity callingActivity, Callback<String> originalCallback, ServiceConnection serviceConnection) {
-            this.callingActivity = callingActivity;
-            this.originalCallback = originalCallback;
-            this.serviceConnection = serviceConnection;
-            myHandler = new Handler(Looper.myLooper());
-        }
-
-        @Override
-        public void onSuccess(final String accessToken) {
-            account = service.getAccount(accountId);
-            try {
-                callingActivity.unbindService(serviceConnection);
-            } catch (IllegalArgumentException ignore) {}
-            myHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    originalCallback.onSuccess(accessToken);
-                }
-            });
-        }
-
-        @Override
-        public void onFailure(final Exception e) {
-            myHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        callingActivity.unbindService(serviceConnection);
-                    } catch (IllegalArgumentException ignore) {}
-                    originalCallback.onFailure(e);
-                }
-            });
-        }
-    }
-
-    private class OAuth2AuthorizationCallback implements Callback<String> {
-
-        private final Activity callingActivity;
-        private final Callback<String> originalCallback;
-        private final ServiceConnection serviceConnection;
-        private final Handler myHandler;
-
-        public OAuth2AuthorizationCallback(Activity callingActivity, Callback<String> originalCallback, ServiceConnection serviceConnection) {
-            this.callingActivity = callingActivity;
-            this.originalCallback = originalCallback;
-            this.serviceConnection = serviceConnection;
-            myHandler = new Handler(Looper.myLooper());
-        }
-
-        @Override
-        public void onSuccess(final String code) {
-            OAuth2AuthzSession session = new OAuth2AuthzSession();
-            session.setAuthorizationCode(code);
-            session.setAccountId(accountId);
-            session.setClientId(clientId);
-            service.addAccount(session);
-
-            OAuth2FetchAccess fetcher = new OAuth2FetchAccess(service);
-            fetcher.fetchAccessCode(accountId, config, new OAuth2AccessCallback(callingActivity, originalCallback, serviceConnection));
-        }
-
-        @Override
-        public void onFailure(final Exception e) {
-            myHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        callingActivity.unbindService(serviceConnection);
-                    } catch (IllegalArgumentException ignore) {}
-                    originalCallback.onFailure(e);
-                }
-            });
-        }
+    
+    /**
+     * Sets the account used in the module.
+     * 
+     * @param account a new account to use
+     */
+    protected void setAccount(OAuth2AuthzSession account) {
+        this.account = account;
     }
 
 }

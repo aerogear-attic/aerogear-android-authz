@@ -16,62 +16,61 @@
 package org.jboss.aerogear.android.authorization.oauth2.intent;
 
 import android.app.Activity;
-import java.net.URI;
-import org.jboss.aerogear.android.authorization.AuthzModule;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.os.IBinder;
+import java.util.UUID;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzModule;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzService;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2FetchAccess;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2Properties;
 import org.jboss.aerogear.android.core.Callback;
-import org.jboss.aerogear.android.pipe.http.HttpException;
-import org.jboss.aerogear.android.pipe.module.AuthorizationFields;
-import org.jboss.aerogear.android.pipe.module.ModuleFields;
 
 /**
  * This is a generic AuthzModule which using intent processing to fetch tokens
  * to authorize requests.
  */
-public class OAuth2IntentAuthzModule implements AuthzModule {
+public class OAuth2IntentAuthzModule extends OAuth2AuthzModule {
 
     public OAuth2IntentAuthzModule(OAuth2Properties params) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super(params);
     }
 
     @Override
-    public boolean isAuthorized() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void requestAccess(final Activity activity, final Callback<String> callback) {
+        final String state = UUID.randomUUID().toString();
+
+        final OAuth2AuthzService.AGAuthzServiceConnection connection = new OAuth2AuthzService.AGAuthzServiceConnection() {
+
+            @Override
+            public void onServiceConnected(ComponentName className, IBinder iBinder) {
+                super.onServiceConnected(className, iBinder);
+                doRequestAccess(state, activity, callback, this);
+            }
+
+        };
+
+        activity.bindService(new Intent(activity.getApplicationContext(), OAuth2AuthzService.class
+        ), connection, Context.BIND_AUTO_CREATE
+        );
     }
 
-    @Override
-    public boolean hasCredentials() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void doRequestAccess(String state, Activity activity, Callback<String> callback, OAuth2AuthzService.AGAuthzServiceConnection instance) {
+        service = instance.getService();
+
+        if (isNullOrEmpty(accountId)) {
+            throw new IllegalArgumentException("need to have accountId set");
+        }
+
+        if (!service.hasAccount(accountId)) {
+
+        } else {
+
+            OAuth2FetchAccess fetcher = new OAuth2FetchAccess(service);
+            fetcher.fetchAccessCode(accountId, config, callback);
+
+        }
     }
 
-    @Override
-    public void requestAccess(Activity activity, Callback<String> callback) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean refreshAccess() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void deleteAccount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public AuthorizationFields getAuthorizationFields(URI requestUri, String method, byte[] requestBody) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public ModuleFields loadModule(URI relativeURI, String httpMethod, byte[] requestBody) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean handleError(HttpException exception) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

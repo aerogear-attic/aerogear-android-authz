@@ -28,6 +28,7 @@ import org.jboss.aerogear.android.core.Config;
 import org.jboss.aerogear.android.authorization.AuthzModule;
 import org.jboss.aerogear.android.authorization.AuthorizationConfiguration;
 import org.jboss.aerogear.android.authorization.oauth2.intent.OAuth2IntentAuthzModule;
+import org.jboss.aerogear.android.authorization.oauth2.webview.OAuth2WebViewAuthzModule;
 
 public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration<OAuth2AuthorizationConfiguration> implements Config<OAuth2AuthorizationConfiguration> {
 
@@ -289,7 +290,7 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
         if (withIntent) {
             return new OAuth2IntentAuthzModule(params);
         } else {
-            return new OAuth2AuthzModule(params);
+            return new OAuth2WebViewAuthzModule(params);
         }
     }
 

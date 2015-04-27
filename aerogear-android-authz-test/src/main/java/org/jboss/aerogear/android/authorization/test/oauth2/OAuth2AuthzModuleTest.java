@@ -31,6 +31,7 @@ import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzService;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthorizationException;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzModule;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzSession;
+import org.jboss.aerogear.android.authorization.oauth2.webview.OAuth2WebViewAuthzModule;
 import org.jboss.aerogear.android.authorization.test.util.PatchedActivityInstrumentationTestCase;
 import org.jboss.aerogear.android.authorization.test.util.VoidCallback;
 import org.mockito.ArgumentCaptor;
@@ -123,8 +124,8 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         config.setBaseURL(BASE_URL);
 
         OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
-        Class<?> callbackClass = Class.forName("org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzModule$OAuth2AuthorizationCallback");
-        Constructor<?> constructor = callbackClass.getDeclaredConstructor(OAuth2AuthzModule.class, Activity.class, Callback.class, ServiceConnection.class);
+        Class<?> callbackClass = Class.forName("org.jboss.aerogear.android.authorization.oauth2.webview.OAuth2WebViewAuthzModule$OAuth2AuthorizationCallback");
+        Constructor<?> constructor = callbackClass.getDeclaredConstructor(OAuth2WebViewAuthzModule.class, Activity.class, Callback.class, ServiceConnection.class);
         constructor.setAccessible(true);
 
         Callback callback = (Callback) constructor.newInstance(module, mockActivity, new VoidCallback(), mockServiceConnection);
@@ -153,8 +154,8 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         config.setBaseURL(BASE_URL);
 
         OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
-        Class<?> callbackClass = Class.forName("org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzModule$OAuth2AccessCallback");
-        Constructor<?> constructor = callbackClass.getDeclaredConstructor(OAuth2AuthzModule.class, Activity.class, Callback.class, ServiceConnection.class);
+        Class<?> callbackClass = Class.forName("org.jboss.aerogear.android.authorization.oauth2.webview.OAuth2WebViewAuthzModule$OAuth2AccessCallback");
+        Constructor<?> constructor = callbackClass.getDeclaredConstructor(OAuth2WebViewAuthzModule.class, Activity.class, Callback.class, ServiceConnection.class);
         constructor.setAccessible(true);
 
         Callback callback = (Callback) constructor.newInstance(module, mockActivity, new VoidCallback(), mockServiceConnection);
@@ -164,6 +165,6 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         callback.onSuccess("testToken");
 
         Mockito.verify(mockActivity, times(1)).unbindService(eq(mockServiceConnection));
-        assertEquals("testToken", MainActivity.UnitTestUtils.getPrivateField(module, "account", OAuth2AuthzSession.class).getAccessToken());
+        assertEquals("testToken", ((OAuth2AuthzSession)MainActivity.UnitTestUtils.getSuperPrivateField(module, "account")).getAccessToken());
     }
 }

@@ -18,14 +18,10 @@ package org.jboss.aerogear.android.authorization.oauth2;
 
 import android.app.Activity;
 import android.net.Uri;
-import android.util.Pair;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
 import org.jboss.aerogear.android.core.Callback;
-import static org.jboss.aerogear.android.pipe.util.UrlUtils.appendToBaseURL;
 
 /**
  * This class displays a WebView Dialog Fragment to facilitates exchanging
@@ -55,42 +51,14 @@ public class OAuth2WebFragmentFetchAutorization {
 
     }
 
-    private String formatScopes(ArrayList<String> scopes) throws UnsupportedEncodingException {
-
-        StringBuilder scopeValue = new StringBuilder();
-        String append = "";
-        for (String scope : scopes) {
-            scopeValue.append(append);
-            scopeValue.append(URLEncoder.encode(scope, "UTF-8"));
-            append = "+";
-        }
-
-        return scopeValue.toString();
-    }
-
-    private void doAuthorization(OAuth2Properties config, final Callback<String> callback) throws UnsupportedEncodingException, MalformedURLException {
+     private void doAuthorization(OAuth2Properties config, final Callback<String> callback) throws UnsupportedEncodingException, MalformedURLException {
 
         URL baseURL = config.getBaseURL();
-        URL authzEndpoint = appendToBaseURL(baseURL, config.getAuthzEndpoint());
         Uri redirectURL = Uri.parse(config.getRedirectURL());
-        ArrayList<String> scopes = new ArrayList<String>(config.getScopes());
-        String clientId = config.getClientId();
+        
+        URL authzURL = OAuth2Utils.buildAuthzURL(config, state);
 
-        String query = "?scope=%s&redirect_uri=%s&client_id=%s&state=%s&response_type=code";
-        query = String.format(query, formatScopes(scopes),
-                URLEncoder.encode(redirectURL.toString(), "UTF-8"),
-                clientId, state);
-
-        if (config.getAdditionalAuthorizationParams() != null
-                && config.getAdditionalAuthorizationParams().size() > 0) {
-            for (Pair<String, String> param : config.getAdditionalAuthorizationParams()) {
-                query += String.format("&%s=%s", URLEncoder.encode(param.first, "UTF-8"), URLEncoder.encode(param.second, "UTF-8"));
-            }
-        }
-
-        URL authURL = new URL(authzEndpoint.toString() + query);
-
-        final OAuthWebViewDialog dialog = OAuthWebViewDialog.newInstance(authURL, redirectURL);
+        final OAuthWebViewDialog dialog = OAuthWebViewDialog.newInstance(authzURL, redirectURL);
         dialog.setReceiver(new OAuthWebViewDialog.OAuthReceiver() {
             @Override
             public void receiveOAuthCode(String code) {
@@ -110,5 +78,6 @@ public class OAuth2WebFragmentFetchAutorization {
         dialog.setStyle(android.R.style.Theme_Light_NoTitleBar, 0);
         dialog.show(activity.getFragmentManager(), "TAG");
     }
+
 
 }
