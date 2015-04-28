@@ -357,9 +357,11 @@ public class OAuth2AuthorizationConfiguration extends AuthorizationConfiguration
      * Defaults to false.
      *
      * @param withIntent whether to use an intent or not
+     * @return the current configuration
      */
-    public void setWithIntent(boolean withIntent) {
+    public OAuth2AuthorizationConfiguration setWithIntent(boolean withIntent) {
         this.withIntent = withIntent;
+        return this;
     }
 
 }
