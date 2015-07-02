@@ -16,6 +16,7 @@
  */
 package org.jboss.aerogear.android.authorization.test.oauth2;
 
+import android.support.test.runner.AndroidJUnit4;
 import com.google.gson.JsonObject;
 import java.net.HttpURLConnection;
 
@@ -38,13 +39,23 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import static java.util.Calendar.HOUR;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<MainActivity> {
+@RunWith(AndroidJUnit4.class)
+public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase {
 
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
+    
     private OAuth2AuthzService service;
     private Store mockStore;
     private OAuth2AuthzSession account;
@@ -55,9 +66,8 @@ public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<Mai
         super(MainActivity.class);
     }
 
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
         mockStore = mock(SQLStore.class);
         mockProvider = mock(HttpProvider.class);
         service = new OAuth2AuthzService() {
@@ -81,17 +91,21 @@ public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<Mai
 
     }
 
+    @Test
     public void testFetchTokenReturnsNullForNoAccount() throws OAuth2AuthorizationException {
-        assertEquals(null, service.fetchAccessToken("testAccount", new OAuth2Properties(null, null)));
+        Assert.assertEquals(null, service.fetchAccessToken("testAccount", new OAuth2Properties(null, null)));
     }
 
+    @Test
     public void testFetchTokenForFreshAccount() throws OAuth2AuthorizationException {
         account.setExpires_on(hourFromNow());
         when(mockStore.read(eq("testAccountId"))).thenReturn(account);
 
-        assertEquals("testToken", service.fetchAccessToken("testAccountId", new OAuth2Properties(null, null)));
+        Assert.assertEquals("testToken", service.fetchAccessToken("testAccountId", new OAuth2Properties(null, null)));
     }
 
+ 
+    @Test
     public void testErrorJsonMessage() {
         account.setExpires_on(hourAgo());
         when(mockStore.read(eq("testAccountId"))).thenReturn(account);
@@ -100,13 +114,18 @@ public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<Mai
         try {
             service.fetchAccessToken("testAccountId", new OAuth2Properties(baseUrl, null));
         } catch (OAuth2AuthorizationException exception) {
-            assertEquals("{\"message\":\"this is a message\"}", exception.error);
+            //I'm not using the test annotation or an exception rule here
+            // because for some reason the android libs miss one of the classes
+            // Junit needs for it.  Using stock JUnit causes the 
+            // tests to not run.  Will have to research later.
+            Assert.assertEquals("{\"message\":\"this is a message\"}", exception.error);
             return;
         }
-        fail("Exception not thrown");
+        Assert.fail("Exception not thrown");
         
     }
 
+    @Test
     public void testErrorStringMessage() {
         account.setExpires_on(hourAgo());
         when(mockStore.read(eq("testAccountId"))).thenReturn(account);
@@ -115,13 +134,19 @@ public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<Mai
         try {
             service.fetchAccessToken("testAccountId", new OAuth2Properties(baseUrl, null));
         } catch (OAuth2AuthorizationException exception) {
-            assertEquals("this is a message", exception.error);
+            //I'm not using the test annotation or an exception rule here
+            // because for some reason the android libs miss one of the classes
+            // Junit needs for it.  Using stock JUnit causes the 
+            // tests to not run.  Will have to research later.
+            Assert.assertEquals("this is a message", exception.error);
             return;
         }
-        fail("Exception not thrown");
+        Assert.fail("Exception not thrown");
         
     }
 
+
+    @Test
     public void testRefreshToken() throws OAuth2AuthorizationException {
         account.setExpires_on(hourAgo());
         when(mockStore.read(eq("testAccountId"))).thenReturn(account);
@@ -140,7 +165,7 @@ public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase<Mai
             }
         });
 
-        assertEquals("testRefreshedAccessToken", service.fetchAccessToken("testAccountId", new OAuth2Properties(baseUrl, null)));
+        Assert.assertEquals("testRefreshedAccessToken", service.fetchAccessToken("testAccountId", new OAuth2Properties(baseUrl, null)));
     }
 
     private long hourFromNow() {

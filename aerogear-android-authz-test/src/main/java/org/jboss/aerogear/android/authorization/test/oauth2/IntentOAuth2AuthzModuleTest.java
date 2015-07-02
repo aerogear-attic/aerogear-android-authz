@@ -15,6 +15,7 @@
  */
 package org.jboss.aerogear.android.authorization.test.oauth2;
 
+import android.support.test.runner.AndroidJUnit4;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.jboss.aerogear.android.authorization.AuthorizationManager;
@@ -23,11 +24,15 @@ import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthorizationConfig
 import org.jboss.aerogear.android.authorization.oauth2.intent.OAuth2IntentAuthzModule;
 import org.jboss.aerogear.android.authorization.test.MainActivity;
 import org.jboss.aerogear.android.authorization.test.util.PatchedActivityInstrumentationTestCase;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * Tests the {@link OAuth2IntentAuthzModule} class.
  */
-public class IntentOAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCase<MainActivity>{
+@RunWith(AndroidJUnit4.class)
+public class IntentOAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCase {
 
     private static final URL BASE_URL;
 
@@ -46,6 +51,7 @@ public class IntentOAuth2AuthzModuleTest extends PatchedActivityInstrumentationT
      * If the OAuth2 Config Object has withIntent set then asModule should return
      * a OAuth2IntentAuthzModule instance.
      */
+    @Test
     public void testWithIntentCreatesIntentModule() {
         OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
         config.setBaseURL(BASE_URL);
@@ -53,7 +59,7 @@ public class IntentOAuth2AuthzModuleTest extends PatchedActivityInstrumentationT
 
         AuthzModule module = config.asModule();
 
-        assertTrue(module instanceof OAuth2IntentAuthzModule);
+        Assert.assertTrue(module instanceof OAuth2IntentAuthzModule);
         
     }
     

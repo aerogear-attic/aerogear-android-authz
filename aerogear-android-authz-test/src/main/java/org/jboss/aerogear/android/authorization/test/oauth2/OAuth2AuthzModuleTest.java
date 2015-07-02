@@ -19,6 +19,8 @@ package org.jboss.aerogear.android.authorization.test.oauth2;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.support.test.runner.AndroidJUnit4;
+import android.test.UiThreadTest;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
@@ -34,6 +36,9 @@ import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzSession;
 import org.jboss.aerogear.android.authorization.oauth2.webview.OAuth2WebViewAuthzModule;
 import org.jboss.aerogear.android.authorization.test.util.PatchedActivityInstrumentationTestCase;
 import org.jboss.aerogear.android.authorization.test.util.VoidCallback;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -43,7 +48,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
-public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCase<MainActivity> {
+@RunWith(AndroidJUnit4.class)
+public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCase {
 
     private static final URL BASE_URL;
 
@@ -59,32 +65,32 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         super(MainActivity.class);
     }
 
+    @Test(expected = IllegalStateException.class)
     public void testRequiresBaseURL() {
-        try {
+        
             OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
             OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
-        } catch (IllegalStateException ex) {
-            return;
-        }
-        fail("Expecting illegal state exception.");
+        
 
     }
 
+    @Test
     public void testCreation() throws MalformedURLException {
         OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
         config.setBaseURL(BASE_URL);
 
         OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
 
-        assertFalse(module.isAuthorized());
-        assertEquals(module, AuthorizationManager.getModule("name"));
+        Assert.assertFalse(module.isAuthorized());
+        Assert.assertEquals(module, AuthorizationManager.getModule("name"));
     }
 
+    @Test
     public void testRequestAccess() {
         OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
         config.setBaseURL(BASE_URL);
         OAuth2AuthzModule module = (OAuth2AuthzModule) config.asModule();
-        String state = "testState";
+        
         Activity mockActivity = mock(Activity.class);
         Callback mockCallback = mock(Callback.class);
         when(mockActivity.bindService(any(Intent.class), any(ServiceConnection.class), any(Integer.class))).thenReturn(Boolean.TRUE);
@@ -95,6 +101,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
 
     }
 
+    @Test
     public void testGetAccessTokens() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 
         OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
@@ -106,10 +113,11 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
 
         MainActivity.UnitTestUtils.setPrivateField(module, "account", account);
 
-        assertEquals("Bearer testToken", module.getAuthorizationFields(null, null, null).getHeaders().get(0).second);
-        assertEquals("Authorization", module.getAuthorizationFields(null, null, null).getHeaders().get(0).first);
+        Assert.assertEquals("Bearer testToken", module.getAuthorizationFields(null, null, null).getHeaders().get(0).second);
+        Assert.assertEquals("Authorization", module.getAuthorizationFields(null, null, null).getHeaders().get(0).first);
     }
 
+    @UiThreadTest
     public void testOAuth2AuthorizationCallback() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, NoSuchFieldException, OAuth2AuthorizationException, InterruptedException {
 
@@ -136,9 +144,10 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
 
         Mockito.verify(mockService, times(1)).addAccount(sessionCaptor.capture());
         OAuth2AuthzSession account = sessionCaptor.getValue();
-        assertEquals("testCode", account.getAuthorizationCode());
+        Assert.assertEquals("testCode", account.getAuthorizationCode());
     }
 
+    @UiThreadTest
     public void testOAuth2AccessCallback() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
         OAuth2AuthzService mockService = mock(OAuth2AuthzService.class);
@@ -165,6 +174,6 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         callback.onSuccess("testToken");
 
         Mockito.verify(mockActivity, times(1)).unbindService(eq(mockServiceConnection));
-        assertEquals("testToken", ((OAuth2AuthzSession)MainActivity.UnitTestUtils.getSuperPrivateField(module, "account")).getAccessToken());
+        Assert.assertEquals("testToken", ((OAuth2AuthzSession)MainActivity.UnitTestUtils.getSuperPrivateField(module, "account")).getAccessToken());
     }
 }
