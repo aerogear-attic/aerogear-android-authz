@@ -57,7 +57,7 @@
         <builder.helper.plugin.version>1.7</builder.helper.plugin.version>
 
         <!-- Android configs -->
-        <android.platform>19</android.platform>
+        <android.platform>22</android.platform>
         <android.debug>false</android.debug>
         <proguard.skip>true</proguard.skip>
 
