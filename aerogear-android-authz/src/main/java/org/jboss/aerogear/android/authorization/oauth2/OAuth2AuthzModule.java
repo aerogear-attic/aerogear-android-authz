@@ -19,9 +19,9 @@ package org.jboss.aerogear.android.authorization.oauth2;
 import android.app.Activity;
 import android.content.IntentFilter;
 import android.util.Log;
+import java.net.HttpURLConnection;
 
 import java.net.URI;
-import org.apache.http.HttpStatus;
 
 import org.jboss.aerogear.android.core.Callback;
 import org.jboss.aerogear.android.pipe.module.AuthorizationFields;
@@ -142,8 +142,8 @@ public abstract class OAuth2AuthzModule implements AuthzModule {
      */
     public final boolean handleError(HttpException exception) {
 
-        if (exception.getStatusCode() == HttpStatus.SC_UNAUTHORIZED
-                || exception.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
+        if (exception.getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED
+                || exception.getStatusCode() == HttpURLConnection.HTTP_FORBIDDEN) {
             return isAuthorized() && refreshAccess();
         } else {
             return false;
