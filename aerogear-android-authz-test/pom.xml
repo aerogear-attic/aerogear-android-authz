@@ -41,8 +41,6 @@
         <android.maven.plugin.dex.xms>-Xms256m</android.maven.plugin.dex.xms>
         <android.maven.plugin.dex.xmx>-Xmx2048m</android.maven.plugin.dex.xmx>
 
-        <maven.javadoc.skip>true</maven.javadoc.skip>
-
     </properties>
 
     <dependencies>
