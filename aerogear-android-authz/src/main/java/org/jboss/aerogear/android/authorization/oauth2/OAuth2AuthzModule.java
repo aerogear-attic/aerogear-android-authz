@@ -141,10 +141,11 @@ public abstract class OAuth2AuthzModule implements AuthzModule {
      * refreshed or if the status wasn't of UNAUTHORIZED or FORBIDDEN.
      */
     public final boolean handleError(HttpException exception) {
+        int statusCode = exception.getStatusCode();
 
-        if (exception.getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED
-                || exception.getStatusCode() == HttpURLConnection.HTTP_FORBIDDEN) {
-            return isAuthorized() && refreshAccess();
+        if (statusCode == HttpURLConnection.HTTP_UNAUTHORIZED
+                || statusCode == HttpURLConnection.HTTP_FORBIDDEN) {
+            return refreshAccess() && isAuthorized();
         } else {
             return false;
         }
