@@ -103,7 +103,8 @@ public abstract class OAuth2AuthzModule implements AuthzModule {
             }
 
             try {
-                account.setAccessToken(service.fetchAccessToken(accountId, config));
+                service.fetchAccessToken(accountId, config);
+                account = service.getAccount(accountId);
                 Log.d(TAG, "Access token refresh complete!");
                 return true;
             } catch (OAuth2AuthorizationException ex) {
