@@ -96,7 +96,8 @@ public class OAuth2IntentAuthzModule extends OAuth2AuthzModule {
                     service.addAccount(session);
                     
                     OAuth2FetchAccess fetcher = new OAuth2FetchAccess(service);
-                    fetcher.fetchAccessCode(accountId, config, callback);        
+                    fetcher.fetchAccessCode(accountId, config, callback);   
+                    account = service.getAccount(accountId);
                 }
                 
             } catch (UnsupportedEncodingException ex) {
@@ -110,7 +111,7 @@ public class OAuth2IntentAuthzModule extends OAuth2AuthzModule {
 
             OAuth2FetchAccess fetcher = new OAuth2FetchAccess(service);
             fetcher.fetchAccessCode(accountId, config, callback);
-
+            account = service.getAccount(accountId);
         }
     }
 
