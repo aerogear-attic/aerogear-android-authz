@@ -41,9 +41,9 @@
     <properties>
 
         <!-- Dependencies versions -->
-        <aerogear.android.core.version>3.0.0-SNAPSHOT</aerogear.android.core.version>
-        <aerogear.android.store.version>3.0.0-SNAPSHOT</aerogear.android.store.version>
-        <aerogear.android.pipe.version>3.0.0-SNAPSHOT</aerogear.android.pipe.version>
+        <aerogear.android.core.version>3.0.0</aerogear.android.core.version>
+        <aerogear.android.store.version>3.0.0</aerogear.android.store.version>
+        <aerogear.android.pipe.version>3.0.0</aerogear.android.pipe.version>
 
         <!-- Plugins versions -->
         <maven.javadoc.plugin.version>2.10.3</maven.javadoc.plugin.version>
