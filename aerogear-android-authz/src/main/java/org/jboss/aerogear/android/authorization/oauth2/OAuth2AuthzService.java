@@ -169,14 +169,13 @@ public class OAuth2AuthzService extends Service {
 
     private void openSessionStore() {
         DataManager.config("sessionStore", SQLStoreConfiguration.class)
-                .forClass(OAuth2AuthzSession.class)
                 .withContext(getApplicationContext())
                 .withIdGenerator(new IdGenerator() {
                     @Override
                     public Serializable generate() {
                         return UUID.randomUUID().toString();
                     }
-                }).store();
+                }).store(OAuth2AuthzSession.class);
 
         sessionStore = (SQLStore<OAuth2AuthzSession>) DataManager.getStore("sessionStore");
         sessionStore.openSync();
