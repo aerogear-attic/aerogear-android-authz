@@ -20,7 +20,7 @@
 
     <groupId>org.jboss.aerogear</groupId>
     <artifactId>aerogear-android-authz-parent</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>AeroGear Android Authorization Parent</name>
     <url>http://aerogear.org</url>
@@ -39,7 +39,7 @@
         <connection>scm:git:git@github.com:aerogear/aerogear-android-authz.git</connection>
         <developerConnection>scm:git:git@github.com:aerogear/aerogear-android-authz.git</developerConnection>
         <url>git@github.com:aerogear/aerogear-android-authz.git</url>
-        <tag>3.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
