@@ -42,7 +42,7 @@
 
         <!-- Dependencies versions -->
         <aerogear.android.core.version>3.0.0</aerogear.android.core.version>
-        <aerogear.android.store.version>3.0.0</aerogear.android.store.version>
+        <aerogear.android.store.version>3.0.1</aerogear.android.store.version>
         <aerogear.android.pipe.version>3.0.0</aerogear.android.pipe.version>
 
         <!-- Plugins versions -->
