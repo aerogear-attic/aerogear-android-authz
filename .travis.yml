@@ -1,4 +1,7 @@
-sudo: false # See: docs.travis-ci.com/user/migrating-from-legacy
+# See: Travis Support did recomment moving Android builds to GCE.
+# Which is on 'precise' and has larger VMs: https://docs.travis-ci.com/user/ci-environment/#Virtualization-environments
+sudo: required
+dist: precise
 
 language: android
 
@@ -57,19 +60,19 @@ before_install:
   # AeroGear Android Security
   - git clone git://github.com/aerogear/aerogear-android-security.git
   - cd $PWD/aerogear-android-security
-  - mvn install -DskipTests -fn --quiet 
+  - mvn install -DskipTests -fn --quiet
   - cd -
 
   # AeroGear Android Store
   - git clone git://github.com/aerogear/aerogear-android-store.git
   - cd $PWD/aerogear-android-store/
-  - mvn install -DskipTests -fn --quiet 
+  - mvn install -DskipTests -fn --quiet
   - cd -
 
   # AeroGear Android Pipe
   - git clone git://github.com/aerogear/aerogear-android-pipe.git
   - cd $PWD/aerogear-android-pipe/
-  - mvn install -DskipTests -fn --quiet 
+  - mvn install -DskipTests -fn --quiet
   - cd -
 
 before_script:
@@ -90,6 +93,3 @@ script:
   - adb shell df
   - adb install target/aerogear-android-authz-test-$RELEASE_VERSION.apk
   - mvn android:instrument
-
-
-
