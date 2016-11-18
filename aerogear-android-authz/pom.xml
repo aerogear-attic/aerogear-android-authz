@@ -41,12 +41,11 @@
     <properties>
 
         <!-- Dependencies versions -->
-        <aerogear.android.core.version>3.0.0</aerogear.android.core.version>
-        <aerogear.android.store.version>3.0.1</aerogear.android.store.version>
-        <aerogear.android.pipe.version>3.0.0</aerogear.android.pipe.version>
+        <aerogear.android.core.version>3.1.0</aerogear.android.core.version>
+        <aerogear.android.store.version>3.1.0</aerogear.android.store.version>
+        <aerogear.android.pipe.version>3.2.0</aerogear.android.pipe.version>
 
         <!-- Plugins versions -->
-        <maven.javadoc.plugin.version>2.10.3</maven.javadoc.plugin.version>
         <builder.helper.plugin.version>1.10</builder.helper.plugin.version>
 
     </properties>
@@ -135,7 +134,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven.javadoc.plugin.version}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -158,7 +156,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>${builder.helper.plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>

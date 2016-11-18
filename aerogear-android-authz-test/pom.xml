@@ -32,11 +32,10 @@
     <properties>
 
         <!-- Dependencies versions -->
-        <mockito.version>1.9.5</mockito.version>
+        <mockito.version>1.10.19</mockito.version>
         <dexmaker.version>1.2</dexmaker.version>
         <dexmaker.mockito.version>1.2</dexmaker.mockito.version>
         <android.support.test.version>0.5</android.support.test.version>
-
         <!-- Plugins parameters -->
         <android.maven.plugin.dex.xms>-Xms256m</android.maven.plugin.dex.xms>
         <android.maven.plugin.dex.xmx>-Xmx2048m</android.maven.plugin.dex.xmx>
@@ -134,6 +133,7 @@
                         <skip>${proguard.skip}</skip>
                     </proguard>
                     <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                    <failOnDuplicatePackages>false</failOnDuplicatePackages>
                     <dex>
                         <jvmArguments>
                             <jvmArgument>${android.maven.plugin.dex.xms}</jvmArgument>
