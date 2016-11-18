@@ -20,7 +20,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.UiThreadTest;
+import android.support.test.annotation.UiThreadTest;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
