@@ -68,7 +68,7 @@ Include the following dependencies in your project's `pom.xml`
 
 ## Documentation
 
-For more details about that please consult [our authz documentation](http://aerogear.org/docs/guides/aerogear-android/authz/).
+For more details about that please consult [our documentation](http://aerogear.org/android/).
 
 ## Demo apps
 
