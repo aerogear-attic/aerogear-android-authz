@@ -234,11 +234,7 @@ public class OAuth2AuthzService extends Service {
     private void runAccountAction(OAuth2AuthzSession storedAccount, OAuth2Properties config, final Map<String, String> data, URL endpoint)
             throws OAuth2AuthorizationException {
         try {
-
-            final HttpProvider provider = getHttpProvider(endpoint);
             final String formTemplate = "%s=%s";
-            provider.setDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
-
             final StringBuilder bodyBuilder = new StringBuilder();
 
             String amp = "";
@@ -251,6 +247,10 @@ public class OAuth2AuthzService extends Service {
                 }
                 amp = "&";
             }
+            final URL url = appendToBaseURL(endpoint, bodyBuilder.toString());
+
+            final HttpProvider provider = getHttpProvider(url);
+            provider.setDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
 
             HeaderAndBody headerAndBody;
 
