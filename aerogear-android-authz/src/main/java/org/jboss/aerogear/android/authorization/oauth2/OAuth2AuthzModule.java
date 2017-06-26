@@ -155,6 +155,7 @@ public abstract class OAuth2AuthzModule implements AuthzModule {
     @Override
     public final void deleteAccount() {
         service.removeAccount(accountId);
+        removeAccount();
     }
 
     protected boolean isNullOrEmpty(String testString) {
@@ -168,6 +169,14 @@ public abstract class OAuth2AuthzModule implements AuthzModule {
      */
     protected void setAccount(OAuth2AuthzSession account) {
         this.account = account;
+    }
+
+    /**
+     * Removes the account used in the module.
+     *
+     */
+    protected void removeAccount() {
+        this.account = null;
     }
 
 }
