@@ -41,7 +41,7 @@ Add to your application's `build.gradle` file
 
 ```groovy
 dependencies {
-  compile 'org.jboss.aerogear:aerogear-android-authz:3.1.0'
+  compile 'org.jboss.aerogear:aerogear-android-authz:3.1.1'
 }
 ```
 
@@ -53,7 +53,7 @@ Include the following dependencies in your project's `pom.xml`
 <dependency>
   <groupId>org.jboss.aerogear</groupId>
   <artifactId>aerogear-android-authz</artifactId>
-  <version>3.1.0</version>
+  <version>3.1.1</version>
   <scope>provided</scope>
   <type>jar</type>
 </dependency>
@@ -61,7 +61,7 @@ Include the following dependencies in your project's `pom.xml`
 <dependency>
   <groupId>org.jboss.aerogear</groupId>
   <artifactId>aerogear-android-authz</artifactId>
-  <version>3.1.0</version>
+  <version>3.1.1</version>
   <type>aar</type>
 </dependency>
 ```
