@@ -45,7 +45,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
 
-import static org.jboss.aerogear.android.pipe.util.UrlUtils.appendQueryToBaseURL;
 import static org.jboss.aerogear.android.pipe.util.UrlUtils.appendToBaseURL;
 
 /**
@@ -235,7 +234,11 @@ public class OAuth2AuthzService extends Service {
     private void runAccountAction(OAuth2AuthzSession storedAccount, OAuth2Properties config, final Map<String, String> data, URL endpoint)
             throws OAuth2AuthorizationException {
         try {
+
+            final HttpProvider provider = getHttpProvider(endpoint);
             final String formTemplate = "%s=%s";
+            provider.setDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
+
             final StringBuilder bodyBuilder = new StringBuilder();
 
             String amp = "";
@@ -248,11 +251,6 @@ public class OAuth2AuthzService extends Service {
                 }
                 amp = "&";
             }
-            
-            final URL url = appendQueryToBaseURL(endpoint, bodyBuilder.toString());
-
-            final HttpProvider provider = getHttpProvider(url);
-            provider.setDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
 
             HeaderAndBody headerAndBody;
 
