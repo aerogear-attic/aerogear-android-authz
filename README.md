@@ -15,21 +15,11 @@ AeroGear Android Authz provides ability to integrate their Android application w
 |                 | Project Info  |
 | --------------- | ------------- |
 | License:        | Apache License, Version 2.0  |
-| Build:          | Maven  |
+| Build:          | Gradle  |
 | Documentation:  | https://aerogear.org/android/ |
 | Issue tracker:  | https://issues.jboss.org/browse/AGDROID  |
 | Mailing lists:  | [aerogear-users](http://aerogear-users.1116366.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-users))  |
 |                 | [aerogear-dev](http://aerogear-dev.1069024.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-dev))  |
-
-## Building
-
-Please take a look at the [step by step guide](http://aerogear.org/docs/guides/aerogear-android/how-to-build-aerogear-android/) on our website.
-
-*The following dependencies are required to build this project:*
-
-* [aerogear-android-core](http://github.com/aerogear/aerogear-android-core)
-* [aerogear-android-store](http://github.com/aerogear/aerogear-android-store)
-* [aerogear-android-pipe](http://github.com/aerogear/aerogear-android-pipe)
 
 ## Usage
 
@@ -50,14 +40,6 @@ dependencies {
 Include the following dependencies in your project's `pom.xml`
 
 ```xml
-<dependency>
-  <groupId>org.jboss.aerogear</groupId>
-  <artifactId>aerogear-android-authz</artifactId>
-  <version>3.1.1</version>
-  <scope>provided</scope>
-  <type>jar</type>
-</dependency>
-
 <dependency>
   <groupId>org.jboss.aerogear</groupId>
   <artifactId>aerogear-android-authz</artifactId>
