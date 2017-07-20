@@ -23,8 +23,7 @@ import org.mockito.internal.matchers.VarargMatcher;
  * Convenience class for matching varargs.
  * 
  */
-public class ObjectVarArgsMatcher extends ArgumentMatcher<Object> implements
-        VarargMatcher {
+public class ObjectVarArgsMatcher implements ArgumentMatcher<Object>, VarargMatcher {
 
     private static final long serialVersionUID = 1L;
     private final Object[] expectedValues;

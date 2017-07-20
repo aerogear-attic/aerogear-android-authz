@@ -19,37 +19,39 @@ package org.jboss.aerogear.android.authorization.test.oauth2;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.support.test.runner.AndroidJUnit4;
 import android.support.test.annotation.UiThreadTest;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import org.jboss.aerogear.android.core.Callback;
+import android.support.test.runner.AndroidJUnit4;
+
 import org.jboss.aerogear.android.authorization.AuthorizationManager;
-import org.jboss.aerogear.android.authorization.test.MainActivity;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthorizationConfiguration;
-import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzService;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthorizationException;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzModule;
+import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzService;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzSession;
 import org.jboss.aerogear.android.authorization.oauth2.webview.OAuth2WebViewAuthzModule;
-import org.jboss.aerogear.android.authorization.test.util.PatchedActivityInstrumentationTestCase;
+import org.jboss.aerogear.android.authorization.test.util.UnitTestUtils;
 import org.jboss.aerogear.android.authorization.test.util.VoidCallback;
+import org.jboss.aerogear.android.core.Callback;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.matches;
-import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCase {
+public class OAuth2AuthzModuleTest {
 
     private static final URL BASE_URL;
 
@@ -61,9 +63,6 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         }
     }
 
-    public OAuth2AuthzModuleTest() {
-        super(MainActivity.class);
-    }
 
     @Test(expected = IllegalStateException.class)
     public void testRequiresBaseURL() {
@@ -85,6 +84,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         Assert.assertEquals(module, AuthorizationManager.getModule("name"));
     }
 
+    @SuppressWarnings("WrongConstant")
     @Test
     public void testRequestAccess() {
         OAuth2AuthorizationConfiguration config = AuthorizationManager.config("name", OAuth2AuthorizationConfiguration.class);
@@ -94,7 +94,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         Activity mockActivity = mock(Activity.class);
         Callback mockCallback = mock(Callback.class);
         when(mockActivity.bindService(any(Intent.class), any(ServiceConnection.class), any(Integer.class))).thenReturn(Boolean.TRUE);
-        when(mockActivity.getApplicationContext()).thenReturn(super.getActivity());
+        when(mockActivity.getApplicationContext()).thenReturn(mockActivity);
         module.requestAccess(mockActivity, mockCallback);
 
         Mockito.verify(mockActivity, times(1)).bindService((Intent) any(), (ServiceConnection) any(), any(Integer.class));
@@ -111,7 +111,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
         OAuth2AuthzSession account = new OAuth2AuthzSession();
         account.setAccessToken("testToken");
 
-        MainActivity.UnitTestUtils.setPrivateField(module, "account", account);
+        UnitTestUtils.setPrivateField(module, "account", account);
 
         Assert.assertEquals("Bearer testToken", module.getAuthorizationFields(null, null, null).getHeaders().get(0).second);
         Assert.assertEquals("Authorization", module.getAuthorizationFields(null, null, null).getHeaders().get(0).first);
@@ -138,7 +138,7 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
 
         Callback callback = (Callback) constructor.newInstance(module, mockActivity, new VoidCallback(), mockServiceConnection);
 
-        MainActivity.UnitTestUtils.setPrivateField(module, "service", mockService);
+        UnitTestUtils.setPrivateField(module, "service", mockService);
 
         callback.onSuccess("testCode");
 
@@ -169,11 +169,11 @@ public class OAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCas
 
         Callback callback = (Callback) constructor.newInstance(module, mockActivity, new VoidCallback(), mockServiceConnection);
 
-        MainActivity.UnitTestUtils.setPrivateField(module, "service", mockService);
+        UnitTestUtils.setPrivateField(module, "service", mockService);
 
         callback.onSuccess("testToken");
 
         Mockito.verify(mockActivity, times(1)).unbindService(eq(mockServiceConnection));
-        Assert.assertEquals("testToken", ((OAuth2AuthzSession)MainActivity.UnitTestUtils.getSuperPrivateField(module, "account")).getAccessToken());
+        Assert.assertEquals("testToken", ((OAuth2AuthzSession) UnitTestUtils.getSuperPrivateField(module, "account")).getAccessToken());
     }
 }

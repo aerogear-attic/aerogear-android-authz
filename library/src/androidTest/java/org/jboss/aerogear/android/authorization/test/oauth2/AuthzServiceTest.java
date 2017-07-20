@@ -17,54 +17,51 @@
 package org.jboss.aerogear.android.authorization.test.oauth2;
 
 import android.support.test.runner.AndroidJUnit4;
+
 import com.google.gson.JsonObject;
-import java.net.HttpURLConnection;
 
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthorizationException;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzService;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzSession;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2Properties;
-import org.jboss.aerogear.android.authorization.test.MainActivity;
-import org.jboss.aerogear.android.store.Store;
+import org.jboss.aerogear.android.authorization.test.util.UnitTestUtils;
 import org.jboss.aerogear.android.pipe.http.HeaderAndBody;
-import org.jboss.aerogear.android.pipe.http.HttpProvider;
 import org.jboss.aerogear.android.pipe.http.HttpException;
+import org.jboss.aerogear.android.pipe.http.HttpProvider;
+import org.jboss.aerogear.android.store.Store;
 import org.jboss.aerogear.android.store.sql.SQLStore;
-import org.jboss.aerogear.android.authorization.test.util.PatchedActivityInstrumentationTestCase;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
-import java.net.URL;
-import java.util.Calendar;
-import java.util.HashMap;
-
-import static java.util.Calendar.HOUR;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Calendar;
+import java.util.HashMap;
+
+import static java.util.Calendar.HOUR;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase {
+public class AuthzServiceTest {
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
-    
+
     private OAuth2AuthzService service;
     private Store mockStore;
     private OAuth2AuthzSession account;
     private URL baseUrl;
     private HttpProvider mockProvider;
 
-    public AuthzServiceTest() {
-        super(MainActivity.class);
-    }
 
     @Before
     public void setUp() throws Exception {
@@ -78,7 +75,7 @@ public class AuthzServiceTest extends PatchedActivityInstrumentationTestCase {
             }
 
         };
-        MainActivity.UnitTestUtils.setPrivateField(service, "sessionStore", mockStore);
+        UnitTestUtils.setPrivateField(service, "sessionStore", mockStore);
 
         account = new OAuth2AuthzSession();
         account.setAccessToken("testToken");

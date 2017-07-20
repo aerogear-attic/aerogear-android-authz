@@ -18,11 +18,7 @@ package org.jboss.aerogear.android.authorization.test.oauth2;
 import android.app.Activity;
 import android.os.Looper;
 import android.support.test.runner.AndroidJUnit4;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
 
-import org.jboss.aerogear.android.core.Callback;
 import org.jboss.aerogear.android.authorization.AuthorizationManager;
 import org.jboss.aerogear.android.authorization.AuthzModule;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthorizationConfiguration;
@@ -30,13 +26,18 @@ import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzService;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2AuthzSession;
 import org.jboss.aerogear.android.authorization.oauth2.OAuth2Properties;
 import org.jboss.aerogear.android.authorization.oauth2.intent.OAuth2IntentAuthzModule;
-import org.jboss.aerogear.android.authorization.test.MainActivity;
-import org.jboss.aerogear.android.authorization.test.util.PatchedActivityInstrumentationTestCase;
+import org.jboss.aerogear.android.authorization.test.util.UnitTestUtils;
+import org.jboss.aerogear.android.core.Callback;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.mockito.Matchers.any;
 import org.mockito.Mockito;
+
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 
 
@@ -44,7 +45,8 @@ import static org.mockito.Mockito.mock;
  * Tests the {@link OAuth2IntentAuthzModule} class.
  */
 @RunWith(AndroidJUnit4.class)
-public class IntentOAuth2AuthzModuleTest extends PatchedActivityInstrumentationTestCase {
+public class IntentOAuth2AuthzModuleTest {
+
 
     private static final URL BASE_URL;
 
@@ -55,10 +57,8 @@ public class IntentOAuth2AuthzModuleTest extends PatchedActivityInstrumentationT
             throw new RuntimeException(ex);
         }
     }
-    public IntentOAuth2AuthzModuleTest() {
-        super(MainActivity.class);
-    }
-    
+
+
     /**
      * If the OAuth2 Config Object has withIntent set then asModule should return
      * a OAuth2IntentAuthzModule instance.
@@ -86,8 +86,8 @@ public class IntentOAuth2AuthzModuleTest extends PatchedActivityInstrumentationT
         config.setAccountId("ignore");
         config.setWithIntent(true);
         AuthzModule module = config.asModule();
-        Assert.assertNull(MainActivity.UnitTestUtils.getSuperPrivateField(module, "account"));
-//        /String state, Activity activity, Callback<String> callback, OAuth2AuthzService.AGAuthzServiceConnection instance
+        Assert.assertNull(UnitTestUtils.getSuperPrivateField(module, "account"));
+
         Method doRequestAccessMethod = OAuth2IntentAuthzModule.class.getDeclaredMethod("doRequestAccess", String.class, Activity.class, Callback.class, OAuth2AuthzService.AGAuthzServiceConnection.class);
         OAuth2AuthzService.AGAuthzServiceConnection mockConnection = mock(OAuth2AuthzService.AGAuthzServiceConnection.class);
         OAuth2AuthzService mockService = mock(OAuth2AuthzService.class);
@@ -100,8 +100,8 @@ public class IntentOAuth2AuthzModuleTest extends PatchedActivityInstrumentationT
         Looper.prepare();
         
         doRequestAccessMethod.setAccessible(true);
-        doRequestAccessMethod.invoke(module, "ignore", getActivity(), mock(Callback.class), mockConnection);
-        Assert.assertNotNull(MainActivity.UnitTestUtils.getSuperPrivateField(module, "account"));
+        doRequestAccessMethod.invoke(module, "ignore", mock(Activity.class), mock(Callback.class), mockConnection);
+        Assert.assertNotNull(UnitTestUtils.getSuperPrivateField(module, "account"));
         
     }
     

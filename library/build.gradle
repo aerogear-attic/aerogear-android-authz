@@ -15,21 +15,31 @@ android {
 
     }
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
+    }
+    packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/ASL-2.0.txt'
+        exclude 'META-INF/LGPL-3.0.txt'
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'APK META-INF/io.netty.versions.properties'
+        exclude 'META-INF/io.netty.versions.properties'
+    }
+    lintOptions {
+        disable 'InvalidPackage'//aerogear-crypto includes a namespace that isn't exposed by our APIs
     }
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'org.jboss.aerogear:aerogear-android-core:3.1.0'
     compile 'org.jboss.aerogear:aerogear-android-store:3.1.0'
-    compile 'org.jboss.aerogear:aerogear-android-pipe:3.2.0'
-    compile 'com.google.code.gson:gson:2.8.1'
-
-    testCompile 'junit:junit:4.12'
+    compile ('org.jboss.aerogear:aerogear-android-pipe:3.2.0') {
+        exclude group: 'com.android.support', module: "support-v4"
+    }
 
     androidTestCompile 'com.linkedin.dexmaker:dexmaker-mockito:2.2.0'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
