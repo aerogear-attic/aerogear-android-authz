@@ -1,13 +1,11 @@
 # AeroGear Android Authz
 
 [![Maintenance](https://img.shields.io/maintenance/yes/2016.svg)](http://github.com/aerogear/aerogear-android-authz)
-[![Travis](https://img.shields.io/travis/aerogear/aerogear-android-authz.svg)](http://travis-ci.org/aerogear/aerogear-android-authz)
 [![License](https://img.shields.io/badge/-Apache%202.0-blue.svg)](https://opensource.org/s/Apache-2.0)
 [![Maven Central](https://img.shields.io/maven-central/v/org.jboss.aerogear/aerogear-android-authz.svg)](http://search.maven.org/#search%7Cga%7C1%7Caerogear-android-authz)
 [![Javadocs](http://www.javadoc.io/badge/org.jboss.aerogear/aerogear-android-authz.svg?color=blue)](http://www.javadoc.io/doc/org.jboss.aerogear/aerogear-android-authz)
 
-AeroGear's Android libraries were built as jar and aar packages using [Maven](http://maven.apache.org/) and the [android-maven-plugin](https://github.com/jayway/maven-android-plugin). The project follows the standard Maven layout so it can be imported directly into most IDEs as a Maven project.
-
+AeroGear's Android libraries were built as jar and aar packages using [Gradle](http://gradle.org/) and the [Android SDK](https://developer.android.com/studio/index.html).
 ## Authz
 
 AeroGear Android Authz provides ability to integrate their Android application with RESTful services secured with OAuth 2 using Pipe.
@@ -15,7 +13,7 @@ AeroGear Android Authz provides ability to integrate their Android application w
 |                 | Project Info  |
 | --------------- | ------------- |
 | License:        | Apache License, Version 2.0  |
-| Build:          | Maven  |
+| Build:          | Gradle  |
 | Documentation:  | https://aerogear.org/android/ |
 | Issue tracker:  | https://issues.jboss.org/browse/AGDROID  |
 | Mailing lists:  | [aerogear-users](http://aerogear-users.1116366.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-users))  |

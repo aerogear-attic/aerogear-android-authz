@@ -1,0 +1,51 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+
+        versionCode Integer.parseInt(project.property("VERSION_CODE"))
+        versionName project.property("VERSION_NAME")
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/ASL-2.0.txt'
+        exclude 'META-INF/LGPL-3.0.txt'
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'APK META-INF/io.netty.versions.properties'
+        exclude 'META-INF/io.netty.versions.properties'
+    }
+    lintOptions {
+        disable 'InvalidPackage'//aerogear-crypto includes a namespace that isn't exposed by our APIs
+    }
+}
+
+dependencies {
+    compile 'org.jboss.aerogear:aerogear-android-store:3.1.0'
+    compile ('org.jboss.aerogear:aerogear-android-pipe:3.2.0') {
+        exclude group: 'com.android.support', module: "support-v4"
+    }
+
+    androidTestCompile 'com.linkedin.dexmaker:dexmaker-mockito:2.2.0'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+}
+
+apply from: '../gradle-mvn-push.gradle'
