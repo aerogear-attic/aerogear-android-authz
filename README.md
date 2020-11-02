@@ -39,7 +39,7 @@ Add to your application's `build.gradle` file
 
 ```groovy
 dependencies {
-  compile 'org.jboss.aerogear:aerogear-android-authz:3.1.1'
+  implementation 'org.jboss.aerogear:aerogear-android-authz:4.0.0'
 }
 ```
 
